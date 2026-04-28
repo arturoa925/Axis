@@ -5,9 +5,11 @@ struct AppColors {
 
     // MARK: - Backgrounds
     static let background = Color(hex: "#D8CFC4")
+    // light blue
     static let cardBackground = Color(hex: "#D0DAFF")
 
     // MARK: - Text
+    // navy
     static let TextBlue = Color(hex: "#5B7AC5")
     static let TextBrown = Color(hex: "#774B1C")
     static let TextWhite = Color(hex: "#F0F0F0")
