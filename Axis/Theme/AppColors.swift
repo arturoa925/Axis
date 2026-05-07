@@ -12,7 +12,7 @@ struct AppColors {
     // navy
     static let TextBlue = Color(hex: "#5B7AC5")
     static let TextBrown = Color(hex: "#774B1C")
-    static let TextWhite = Color(hex: "#F0F0F0")
+    static let TextWhite = Color(hex: "#FFFFFF")
     static let TextBlack = Color(hex: "#000000")
 
     // MARK: - Status

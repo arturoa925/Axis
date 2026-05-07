@@ -1,0 +1,92 @@
+//
+//  ExerciseOptionLibrary.swift
+//  Axis
+//
+//  Created by Arturo Ayala on 4/28/26.
+//
+
+enum ExerciseOptionLibrary {
+    static let all: [ExerciseOption] = [
+        // Barbell
+        ExerciseOption(name: "Bench Press", equipment: .barbell),
+        ExerciseOption(name: "Incline Bench Press", equipment: .barbell),
+        ExerciseOption(name: "Close Grip Bench Press", equipment: .barbell),
+        ExerciseOption(name: "Back Squat", equipment: .barbell),
+        ExerciseOption(name: "Front Squat", equipment: .barbell),
+        ExerciseOption(name: "Deadlift", equipment: .barbell),
+        ExerciseOption(name: "Romanian Deadlift", equipment: .barbell),
+        ExerciseOption(name: "Hip Thrust", equipment: .barbell),
+        ExerciseOption(name: "Overhead Press", equipment: .barbell),
+        ExerciseOption(name: "Push Press", equipment: .barbell),
+        ExerciseOption(name: "Barbell Row", equipment: .barbell),
+        ExerciseOption(name: "Pendlay Row", equipment: .barbell),
+        ExerciseOption(name: "Shrug", equipment: .barbell),
+        ExerciseOption(name: "Good Morning", equipment: .barbell),
+        ExerciseOption(name: "Lunge", equipment: .barbell),
+
+        // Dumbbell
+        ExerciseOption(name: "Incline Dumbbell Press", equipment: .dumbbell),
+        ExerciseOption(name: "Flat Dumbbell Press", equipment: .dumbbell),
+        ExerciseOption(name: "Dumbbell Fly", equipment: .dumbbell),
+        ExerciseOption(name: "Dumbbell Shoulder Press", equipment: .dumbbell),
+        ExerciseOption(name: "Arnold Press", equipment: .dumbbell),
+        ExerciseOption(name: "Lateral Raise", equipment: .dumbbell),
+        ExerciseOption(name: "Rear Delt Fly", equipment: .dumbbell),
+        ExerciseOption(name: "Dumbbell Row", equipment: .dumbbell),
+        ExerciseOption(name: "Chest Supported Row", equipment: .dumbbell),
+        ExerciseOption(name: "Dumbbell Curl", equipment: .dumbbell),
+        ExerciseOption(name: "Hammer Curl", equipment: .dumbbell),
+        ExerciseOption(name: "Goblet Squat", equipment: .dumbbell),
+        ExerciseOption(name: "Bulgarian Split Squat", equipment: .dumbbell),
+        ExerciseOption(name: "Walking Lunge", equipment: .dumbbell),
+        ExerciseOption(name: "Calf Raise", equipment: .dumbbell),
+
+        // Cable
+        ExerciseOption(name: "Cable Fly", equipment: .cable),
+        ExerciseOption(name: "High to Low Fly", equipment: .cable),
+        ExerciseOption(name: "Low to High Fly", equipment: .cable),
+        ExerciseOption(name: "Tricep Pushdown", equipment: .cable),
+        ExerciseOption(name: "Overhead Tricep Extension", equipment: .cable),
+        ExerciseOption(name: "Lat Pulldown", equipment: .cable),
+        ExerciseOption(name: "Straight Arm Pulldown", equipment: .cable),
+        ExerciseOption(name: "Seated Cable Row", equipment: .cable),
+        ExerciseOption(name: "Single Arm Row", equipment: .cable),
+        ExerciseOption(name: "Face Pull", equipment: .cable),
+        ExerciseOption(name: "Cable Curl", equipment: .cable),
+        ExerciseOption(name: "Cable Lateral Raise", equipment: .cable),
+        ExerciseOption(name: "Cable Crunch", equipment: .cable),
+        ExerciseOption(name: "Wood Chop", equipment: .cable),
+
+        // Bodyweight
+        ExerciseOption(name: "Push-Up", equipment: .bodyweight),
+        ExerciseOption(name: "Decline Push-Up", equipment: .bodyweight),
+        ExerciseOption(name: "Pull-Up", equipment: .bodyweight),
+        ExerciseOption(name: "Chin-Up", equipment: .bodyweight),
+        ExerciseOption(name: "Dip", equipment: .bodyweight),
+        ExerciseOption(name: "Bodyweight Squat", equipment: .bodyweight),
+        ExerciseOption(name: "Jump Squat", equipment: .bodyweight),
+        ExerciseOption(name: "Walking Lunge", equipment: .bodyweight),
+        ExerciseOption(name: "Plank", equipment: .bodyweight),
+        ExerciseOption(name: "Side Plank", equipment: .bodyweight),
+        ExerciseOption(name: "Mountain Climber", equipment: .bodyweight),
+        ExerciseOption(name: "Burpee", equipment: .bodyweight),
+        ExerciseOption(name: "Crunch", equipment: .bodyweight),
+        ExerciseOption(name: "Leg Raise", equipment: .bodyweight),
+
+        // Machine
+        ExerciseOption(name: "Leg Press", equipment: .machine),
+        ExerciseOption(name: "Hack Squat", equipment: .machine),
+        ExerciseOption(name: "Chest Press Machine", equipment: .machine),
+        ExerciseOption(name: "Shoulder Press Machine", equipment: .machine),
+        ExerciseOption(name: "Pec Deck", equipment: .machine),
+        ExerciseOption(name: "Lat Pulldown Machine", equipment: .machine),
+        ExerciseOption(name: "Row Machine", equipment: .machine),
+        ExerciseOption(name: "Leg Extension", equipment: .machine),
+        ExerciseOption(name: "Hamstring Curl", equipment: .machine),
+        ExerciseOption(name: "Calf Raise Machine", equipment: .machine),
+        ExerciseOption(name: "Assisted Pull-Up", equipment: .machine),
+        ExerciseOption(name: "Smith Machine Squat", equipment: .machine),
+        ExerciseOption(name: "Smith Machine Bench", equipment: .machine),
+        ExerciseOption(name: "Ab Crunch Machine", equipment: .machine)
+    ]
+}

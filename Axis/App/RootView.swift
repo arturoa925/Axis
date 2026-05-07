@@ -47,6 +47,12 @@ struct RootView: View {
                 onboardingStep = appState.hasCompletedOnboarding ? .main : .guide
             }
         }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.2) {
+            withAnimation(.easeInOut(duration: 0.75)) {
+                onboardingStep = .main
+            }
+        }
     }
 }
 

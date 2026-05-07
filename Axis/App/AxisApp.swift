@@ -1,6 +1,5 @@
-
-
 import SwiftUI
+import SwiftData
 
 @main
 struct AxisApp: App {
@@ -10,6 +9,15 @@ struct AxisApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(appState)
+                .modelContainer(for: [
+                    Exercise.self,
+                    TemplateExercise.self,
+                    WorkoutTemplate.self,
+                    ActiveExercise.self,
+                    ActiveWorkout.self,
+                    CompletedExercise.self,
+                    CompletedWorkout.self
+                ])
         }
     }
 }

@@ -1,0 +1,213 @@
+//
+//  AddExerciseSection.swift
+//  Axis
+//
+//  Created by Arturo Ayala on 5/7/26.
+//
+
+import SwiftUI
+import SwiftData
+
+struct AddExerciseSection: View {
+    @Bindable var routine: WorkoutTemplate
+
+    @Binding var exerciseSearchText: String
+    @Binding var selectedEquipment: EquipmentType
+    @Binding var isAddPanelExpanded: Bool
+    let addPanelDragGesture: AnyGesture<DragGesture.Value>
+    @Query(sort: \Exercise.name) private var exerciseLibrary: [Exercise]
+
+    private var filteredExercises: [Exercise] {
+        exerciseLibrary
+            .filter { $0.equipment.lowercased() == selectedEquipment.rawValue.lowercased() }
+            .filter { exercise in
+                exerciseSearchText.isEmpty || exercise.name.localizedCaseInsensitiveContains(exerciseSearchText)
+            }
+    }
+    let saveChanges: () -> Void
+    let removeExercise: (TemplateExercise) -> Void
+
+    var body: some View {
+        VStack(spacing: 12) {
+            addExercisePanel
+            saveButton
+        }
+    }
+
+    private var addExercisePanel: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Button {
+                withAnimation(.smooth(duration: 0.28)) {
+                    isAddPanelExpanded.toggle()
+                }
+            } label: {
+                Capsule()
+                    .fill(.white.opacity(0.28))
+                    .frame(width: 42, height: 5)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 4)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .gesture(addPanelDragGesture)
+            .accessibilityLabel(isAddPanelExpanded ? "Collapse exercise search" : "Expand exercise search")
+
+            HStack(spacing: 10) {
+                Image(systemName: "magnifyingglass")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(.secondary)
+
+                TextField("Add another exercise", text: $exerciseSearchText)
+                    .font(.custom("NotoSans-Regular", size: 15, relativeTo: .body))
+                    .textInputAutocapitalization(.words)
+                    .submitLabel(.search)
+
+                Button {
+                    withAnimation(.smooth(duration: 0.28)) {
+                        isAddPanelExpanded.toggle()
+                    }
+                } label: {
+                    Image(systemName: isAddPanelExpanded ? "chevron.down" : "chevron.up")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.78))
+                        .frame(width: 28, height: 28)
+                        .background(.white.opacity(0.10))
+                        .clipShape(Circle())
+                        .animation(nil, value: isAddPanelExpanded)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(isAddPanelExpanded ? "Collapse exercise search" : "Expand exercise search")
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(.white.opacity(0.12), lineWidth: 1)
+            }
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(EquipmentType.allCases) { equipment in
+                        Button {
+                            withAnimation(.smooth(duration: 0.22)) {
+                                selectedEquipment = equipment
+                            }
+                        } label: {
+                            Text(equipment.title)
+                                .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
+                                .foregroundStyle(selectedEquipment == equipment ? AppColors.background : .white.opacity(0.82))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 7)
+                                .background(selectedEquipment == equipment ? Color.white : Color.white.opacity(0.08))
+                                .clipShape(Capsule())
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+
+            if isAddPanelExpanded {
+                ScrollView(showsIndicators: false) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 145), spacing: 10)], spacing: 10) {
+                        ForEach(filteredExercises) { option in
+                            addExerciseChip(option)
+                        }
+                    }
+                    .padding(.top, 2)
+                    .padding(.bottom, 8)
+                }
+                .transition(.opacity.combined(with: .move(edge: .bottom)))
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(filteredExercises) { option in
+                            addExerciseChip(option)
+                        }
+                    }
+                }
+                .transition(.opacity)
+            }
+        }
+        .padding(14)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .stroke(.white.opacity(0.12), lineWidth: 1)
+        }
+    }
+
+    private func addExerciseChip(_ option: Exercise) -> some View {
+        let isAlreadyAdded = routine.exercises.contains { $0.exercise.name == option.name }
+
+        return Button {
+            toggleExercise(option)
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: isAlreadyAdded ? "checkmark.circle.fill" : "plus.circle.fill")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(isAlreadyAdded ? .green : AppColors.TextBlue)
+
+                Text(option.name)
+                    .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
+                    .foregroundStyle(isAlreadyAdded ? AppColors.background : .white)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.82)
+
+                if isAlreadyAdded {
+                    Text("Added")
+                        .font(.custom("NotoSans-Regular", size: 11, relativeTo: .caption2))
+                        .foregroundStyle(AppColors.background.opacity(0.72))
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 3)
+                        .background(AppColors.background.opacity(0.10))
+                        .clipShape(Capsule())
+                }
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
+            .frame(maxWidth: isAddPanelExpanded ? .infinity : nil, alignment: .leading)
+            .background(isAlreadyAdded ? Color.white : Color.white.opacity(0.08))
+            .clipShape(Capsule())
+            .overlay {
+                Capsule()
+                    .stroke(isAlreadyAdded ? Color.clear : .white.opacity(0.10), lineWidth: 1)
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(isAlreadyAdded ? "Remove \(option.name) from routine" : "Add \(option.name) to routine")
+    }
+
+    private var saveButton: some View {
+        Button {
+            saveChanges()
+        } label: {
+            Text("Save Changes")
+                .font(.custom("NotoSans-Regular", size: 17, relativeTo: .headline))
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 15)
+                .background(AppColors.TextBlue)
+                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func toggleExercise(_ exercise: Exercise) {
+        withAnimation(.smooth(duration: 0.28)) {
+            if let existingExercise = routine.exercises.first(where: { $0.exercise.name == exercise.name }) {
+                removeExercise(existingExercise)
+            } else {
+                let templateExercise = TemplateExercise(
+                    orderIndex: routine.exercises.count,
+                    exercise: exercise,
+                    targetSets: 3,
+                    targetReps: 10
+                )
+                routine.exercises.append(templateExercise)
+            }
+        }
+    }
+}
