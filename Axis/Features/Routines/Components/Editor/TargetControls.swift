@@ -68,3 +68,60 @@ struct TargetControl: View {
         }
     }
 }
+#Preview {
+    @Previewable @State var sets = 3
+    @Previewable @State var reps = 10
+    @Previewable @State var weight = 135
+    
+    return ZStack {
+        AppColors.background
+            .ignoresSafeArea()
+        
+        VStack(spacing: 16) {
+            Text("Target Controls Preview")
+                .font(.custom("NotoSans-Regular", size: 24, relativeTo: .title2))
+                .foregroundStyle(.white)
+                .padding(.bottom, 8)
+            
+            TargetControl(
+                title: "Sets",
+                value: $sets,
+                range: 1...10
+            )
+            
+            TargetControl(
+                title: "Reps",
+                value: $reps,
+                range: 1...50
+            )
+            
+            TargetControl(
+                title: "Weight (lbs)",
+                value: $weight,
+                range: 5...500
+            )
+            
+            Spacer()
+            
+            // Display current values
+            VStack(spacing: 8) {
+                Text("Current Values:")
+                    .font(.custom("NotoSans-Regular", size: 14, relativeTo: .caption))
+                    .foregroundStyle(.white.opacity(0.7))
+                
+                Text("\(sets) sets × \(reps) reps @ \(weight) lbs")
+                    .font(.custom("NotoSans-Regular", size: 18, relativeTo: .body))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(.ultraThinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            }
+            .padding(.top, 20)
+            
+            Spacer()
+        }
+        .padding(24)
+    }
+}
+

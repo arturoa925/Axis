@@ -211,3 +211,63 @@ struct AddExerciseSection: View {
         }
     }
 }
+#Preview {
+    @Previewable @State var exerciseSearchText = ""
+    @Previewable @State var selectedEquipment = EquipmentType.barbell
+    @Previewable @State var isAddPanelExpanded = false
+    
+    // Create sample data
+    let sampleExercises = [
+        Exercise(name: "Bench Press", equipment: "barbell"),
+        Exercise(name: "Squat", equipment: "barbell"),
+        Exercise(name: "Deadlift", equipment: "barbell"),
+        Exercise(name: "Bicep Curl", equipment: "dumbbell"),
+        Exercise(name: "Shoulder Press", equipment: "dumbbell"),
+        Exercise(name: "Cable Fly", equipment: "cable"),
+        Exercise(name: "Pull-up", equipment: "bodyweight"),
+        Exercise(name: "Leg Press", equipment: "machine")
+    ]
+    
+    let sampleRoutine = WorkoutTemplate(
+        name: "Push Day",
+        exercises: []
+    )
+    
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(
+        for: Exercise.self, WorkoutTemplate.self, TemplateExercise.self,
+        configurations: config
+    )
+    
+    // Insert sample exercises into the container
+    for exercise in sampleExercises {
+        container.mainContext.insert(exercise)
+    }
+    container.mainContext.insert(sampleRoutine)
+    
+    return ZStack {
+        AppColors.background
+            .ignoresSafeArea()
+        
+        VStack {
+            Spacer()
+            
+            AddExerciseSection(
+                routine: sampleRoutine,
+                exerciseSearchText: $exerciseSearchText,
+                selectedEquipment: $selectedEquipment,
+                isAddPanelExpanded: $isAddPanelExpanded,
+                addPanelDragGesture: AnyGesture(DragGesture().onChanged { _ in }),
+                saveChanges: {
+                    print("Save changes tapped")
+                },
+                removeExercise: { exercise in
+                    print("Remove exercise: \(exercise.name)")
+                }
+            )
+            .padding()
+        }
+    }
+    .modelContainer(container)
+}
+

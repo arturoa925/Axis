@@ -9,7 +9,7 @@ struct RootView: View {
             AppColors.background
                 .ignoresSafeArea()
 
-            Group {
+            
                 switch onboardingStep {
                 case .launch:
                     LaunchView()
@@ -27,7 +27,7 @@ struct RootView: View {
                     MainTabView()
                         .transition(.opacity)
                 }
-            }
+            
         }
         .animation(.easeInOut(duration: 0.6), value: onboardingStep)
         .onAppear {

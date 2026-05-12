@@ -196,3 +196,57 @@ struct RoutineEditor: View {
 
 
 }
+#Preview {
+    // Create sample exercises
+    let benchPress = Exercise(name: "Bench Press", equipment: "barbell")
+    let squat = Exercise(name: "Back Squat", equipment: "barbell")
+    let deadlift = Exercise(name: "Deadlift", equipment: "barbell")
+    let shoulderPress = Exercise(name: "Overhead Press", equipment: "barbell")
+    let bicepCurl = Exercise(name: "Bicep Curl", equipment: "dumbbell")
+    let tricepExtension = Exercise(name: "Tricep Extension", equipment: "dumbbell")
+    let cableFly = Exercise(name: "Cable Fly", equipment: "cable")
+    let pullUp = Exercise(name: "Pull-up", equipment: "bodyweight")
+    let legPress = Exercise(name: "Leg Press", equipment: "machine")
+    
+    // Create template exercises for the routine
+    let templateExercises = [
+        TemplateExercise(orderIndex: 0, exercise: benchPress, targetSets: 4, targetReps: 8),
+        TemplateExercise(orderIndex: 1, exercise: shoulderPress, targetSets: 3, targetReps: 10),
+        TemplateExercise(orderIndex: 2, exercise: tricepExtension, targetSets: 3, targetReps: 12)
+    ]
+    
+    // Create the workout template
+    let pushDayRoutine = WorkoutTemplate(
+        name: "Push Day",
+        exercises: templateExercises
+    )
+    
+    // Set up in-memory model container
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(
+        for: Exercise.self, WorkoutTemplate.self, TemplateExercise.self,
+        configurations: config
+    )
+    
+    // Insert all sample exercises into the library
+    let allExercises = [
+        benchPress, squat, deadlift, shoulderPress,
+        bicepCurl, tricepExtension, cableFly, pullUp, legPress
+    ]
+    
+    for exercise in allExercises {
+        container.mainContext.insert(exercise)
+    }
+    
+    // Insert the routine and its template exercises
+    container.mainContext.insert(pushDayRoutine)
+    for templateExercise in templateExercises {
+        container.mainContext.insert(templateExercise)
+    }
+    
+    return NavigationStack {
+        RoutineEditor(routine: pushDayRoutine)
+    }
+    .modelContainer(container)
+}
+

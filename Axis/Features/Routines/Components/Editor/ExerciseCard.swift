@@ -88,3 +88,70 @@ struct ExerciseCard: View {
         .animation(.smooth(duration: 0.28), value: expandedExerciseID)
     }
 }
+#Preview {
+    @Previewable @State var expandedExerciseID: UUID? = nil
+    
+    // Create sample exercises
+    let benchPress = Exercise(name: "Bench Press", equipment: "barbell")
+    let squat = Exercise(name: "Back Squat", equipment: "barbell")
+    let bicepCurl = Exercise(name: "Bicep Curl", equipment: "dumbbell")
+    
+    let sampleExercises = [
+        TemplateExercise(orderIndex: 0, exercise: benchPress, targetSets: 4, targetReps: 8),
+        TemplateExercise(orderIndex: 1, exercise: squat, targetSets: 3, targetReps: 12),
+        TemplateExercise(orderIndex: 2, exercise: bicepCurl, targetSets: 3, targetReps: 10)
+    ]
+    
+    // Equipment title formatter
+    let equipmentFormatter: (String) -> String = { equipment in
+        equipment.capitalized
+    }
+    
+    // Target control builder
+    let targetControlBuilder: (String, Binding<Int>, ClosedRange<Int>) -> AnyView = { label, binding, range in
+        AnyView(
+            VStack(spacing: 6) {
+                Text(label)
+                    .font(.custom("NotoSans-Regular", size: 12, relativeTo: .caption2))
+                    .foregroundStyle(.white.opacity(0.64))
+                
+                Stepper(
+                    value: binding,
+                    in: range,
+                    step: 1
+                ) {
+                    Text("\(binding.wrappedValue)")
+                        .font(.custom("NotoSans-Regular", size: 18, relativeTo: .body))
+                        .foregroundStyle(.white)
+                        .frame(minWidth: 40)
+                }
+                .labelsHidden()
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
+            .background(.white.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        )
+    }
+    
+    return ZStack {
+        AppColors.background
+            .ignoresSafeArea()
+        
+        ScrollView {
+            VStack(spacing: 12) {
+                ForEach(sampleExercises, id: \.id) { exercise in
+                    ExerciseCard(
+                        exercise: exercise,
+                        expandedExerciseID: $expandedExerciseID,
+                        equipmentTitle: equipmentFormatter,
+                        targetControl: targetControlBuilder
+                    )
+                }
+            }
+            .padding()
+        }
+    }
+}
+

@@ -34,6 +34,7 @@ final class ActiveWorkout {
         self.exercises = exercises
     }
     
+    // takes already made routines and converts them 'active'
     convenience init(template: WorkoutTemplate) {
         let sortedExercises = template.exercises.sorted { $0.orderIndex < $1.orderIndex }
 
