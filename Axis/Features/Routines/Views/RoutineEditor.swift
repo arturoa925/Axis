@@ -46,7 +46,7 @@ struct RoutineEditor: View {
                                 ExerciseCard(
                                     exercise: exercise,
                                     expandedExerciseID: $expandedExerciseID,
-                                    equipmentTitle: equipmentTitle(for:),
+                                    equipmentTitle: { EquipmentType(rawValue: $0)?.title ?? $0 },
                                     targetControl: { title, value, range in
                                         AnyView(TargetControl(title: title, value: value, range: range))
                                     }
@@ -195,18 +195,4 @@ struct RoutineEditor: View {
     }
 
 
-    private func equipmentTitle(for equipment: String) -> String {
-        switch equipment.lowercased() {
-        case "barbell":
-            return "Barbell"
-        case "dumbbell", "dumbbells":
-            return "Dumbbell"
-        case "cable", "cables":
-            return "Cable"
-        case "bodyweight", "body weight":
-            return "Bodyweight"
-        default:
-            return equipment
-        }
-    }
 }

@@ -20,8 +20,8 @@ struct MainTabView: View {
             Exercise.self,
             TemplateExercise.self,
             WorkoutTemplate.self,
-            ActiveExercise.self,
-            ActiveWorkout.self,
+            // ActiveExercise.self,
+            // ActiveWorkout.self,
             CompletedExercise.self,
             CompletedWorkout.self
         ], inMemory: true)

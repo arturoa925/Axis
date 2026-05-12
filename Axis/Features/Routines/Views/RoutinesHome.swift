@@ -24,80 +24,84 @@ struct RoutinesHome: View {
                 AppColors.background
                     .ignoresSafeArea()
 
-                VStack(spacing: 8) {
-                    Text("Routines")
-                        .font(.custom("IstokWeb-Regular", size: 40, relativeTo: .largeTitle))
-                        .foregroundStyle(.white)
-                        .padding(.top, 50)
-                        
+                if selectedTab == .routines {
+                    VStack(spacing: 8) {
+                        Text("Routines")
+                            .font(.custom("IstokWeb-Regular", size: 40, relativeTo: .largeTitle))
+                            .foregroundStyle(.white)
+                            .padding(.top, 50)
 
-                    ScrollView {
-                        if routines.isEmpty {
-                            VStack(spacing: 10) {
-                                Image(systemName: "list.bullet.clipboard")
-                                    .font(.system(size: 34))
-                                    .foregroundStyle(.white.opacity(0.8))
+                        ScrollView {
+                            if routines.isEmpty {
+                                VStack(spacing: 10) {
+                                    Image(systemName: "list.bullet.clipboard")
+                                        .font(.system(size: 34))
+                                        .foregroundStyle(.white.opacity(0.8))
 
-                                Text("Create your first routine")
-                                    .font(.custom("NotoSans-Regular", size: 17, relativeTo: .body))
-                                    .foregroundStyle(.white)
+                                    Text("Create your first routine")
+                                        .font(.custom("NotoSans-Regular", size: 17, relativeTo: .body))
+                                        .foregroundStyle(.white)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 120)
+                            } else {
+                                LazyVStack(spacing: 12) {
+                                    ForEach(routines) { routine in
+                                        VStack(alignment: .leading, spacing: 6) {
+                                            Text(routine.name)
+                                                .font(.custom("IstokWeb-Regular", size: 22, relativeTo: .title3))
+                                                .foregroundStyle(AppColors.TextBlue)
 
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(.top, 120)
-                        } else {
-                            LazyVStack(spacing: 12) {
-                                ForEach(routines) { routine in
-                                    VStack(alignment: .leading, spacing: 6) {
-                                        Text(routine.name)
-                                            .font(.custom("IstokWeb-Regular", size: 22, relativeTo: .title3))
-                                            .foregroundStyle(AppColors.TextBlue)
-
-                                        Text("\(routine.exercises.count) exercises")
-                                            .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
-                                            .foregroundStyle(AppColors.TextBlue.opacity(0.72))
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(16)
-                                    .background(AppColors.cardBackground.opacity(0.95))
-                                    .clipShape(RoundedRectangle(cornerRadius: 18))
-                                    .contentShape(RoundedRectangle(cornerRadius: 18))
-                                    // new routine selected
-                                    .onTapGesture {
-                                        routineToEdit = routine
-                                    }
-                                    .onLongPressGesture {
-                                        routineToDelete = routine
+                                            Text("\(routine.exercises.count) exercises")
+                                                .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
+                                                .foregroundStyle(AppColors.TextBlue.opacity(0.72))
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(16)
+                                        .background(AppColors.cardBackground.opacity(0.95))
+                                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                                        .contentShape(RoundedRectangle(cornerRadius: 18))
+                                        .onTapGesture {
+                                            routineToEdit = routine
+                                        }
+                                        .onLongPressGesture {
+                                            routineToDelete = routine
+                                        }
                                     }
                                 }
+                                .padding(.horizontal, 20)
+                                .padding(.top, 6)
                             }
-                            .padding(.horizontal, 20)
-                            .padding(.top, 6)
                         }
+                        .safeAreaPadding(.bottom, 180)
                     }
-                    .safeAreaPadding(.bottom, 180)
+                } else {
+                    HistoryView()
+                        .safeAreaPadding(.bottom, 120)
                 }
 
                 VStack {
                     Spacer()
 
                     VStack(spacing: 14) {
-                        Button {
-                            isShowingCreateRoutine = true
-                        } label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "plus.circle.fill")
-                                Text("Create Routine")
+                        if selectedTab == .routines {
+                            Button {
+                                isShowingCreateRoutine = true
+                            } label: {
+                                HStack(spacing: 8) {
+                                    Image(systemName: "plus.circle.fill")
+                                    Text("Create Routine")
+                                }
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding(.vertical, 2)
                             }
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(.vertical, 2)
+                            .buttonStyle(.borderedProminent)
+                            .controlSize(.large)
+                            .buttonBorderShape(.capsule)
+                            .tint(.blue)
+                            .padding(.horizontal, 24)
                         }
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.large)
-                        .buttonBorderShape(.capsule)
-                        .tint(.blue)
-                        .padding(.horizontal, 24)
 
                         HStack(spacing: 12) {
                             routineTabButton(
