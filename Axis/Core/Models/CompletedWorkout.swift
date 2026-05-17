@@ -40,6 +40,31 @@ final class CompletedWorkout {
         self.averageHeartRate = averageHeartRate
         self.exercises = exercises
     }
+    
+    
+    convenience init(from watchPayload: WatchCompletedWorkoutPayload, endedAt: Date = Date()) {
+        let completedExercises = watchPayload.exercises.map { ex in
+            CompletedExercise(
+                orderIndex: ex.orderIndex,
+                name: ex.name,
+                completedSets: ex.completedSets,
+                targetSets: ex.targetSets,
+                targetReps: ex.targetReps,
+                totalRepsCompleted: ex.completedSets * ex.targetReps
+            )
+        }
+        self.init(
+            templateID: watchPayload.templateID.flatMap { UUID(uuidString: $0) },
+            templateName: watchPayload.templateName,
+            startedAt: watchPayload.startedAt,
+            endedAt: endedAt,
+            elapsedTime: watchPayload.duration,
+            exercises: completedExercises
+        )
+    }
+
+    
+    // transforming activeworkout to complete
     convenience init(
         from activeWorkout: ActiveWorkout,
         endedAt: Date = Date(),

@@ -44,7 +44,7 @@ Exercise (library)
 - `WorkoutSessionManager.swift` — `@Observable` class that owns the in-progress `ActiveWorkout`. All workout interaction (start, pause, resume, incrementRep, completeSet, finish) goes through this manager. It is not yet wired into the SwiftData context; `finishWorkout()` returns a `CompletedWorkout` but the caller is responsible for inserting it.
 - `WatchConnectionCheck.swift` — placeholder; currently empty.
 
-### Features
+### Features on iPone
 
 **Launch** (`Features/Launch/`) — `LaunchView` wraps `LaunchAnimation`.
 
@@ -63,6 +63,18 @@ Exercise (library)
 - the history feature will display cards as the format
 - each card will have the name of the completed workout, the date completed, the elapsed time, list of exercises
 
+### Features on Apple Watch
+
+- similar watch connectivity manager which matches the one for iphone, roles are just reversed
+- watch workout session creates the logic during a live workout, includes controls and payloads
+- watch paylods retrieves routine data from iphone and converts to a more lightweight package suitable for watch
+
+### Views on Apple Watch
+
+- Greeting will be the watch's version of onboarding, just displaying the name of the app and some cool animations
+- Workout Selector will be the following view with a list of cards displaying all the saved or created routines from iphone
+- Started Workout will be the view the user gets when pressing start and starting a live workout
+- Workout Complete will be the end view with a recap of statistics
 
 
 ### Theme (`Axis/Theme/`)

@@ -17,6 +17,7 @@ struct RoutinesHome: View {
     @State private var routineToDelete: WorkoutTemplate?
     @Namespace private var tabAnimation
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var connectivityManager: PhoneConnectivityManager
 
     var body: some View {
         NavigationStack {
@@ -166,6 +167,21 @@ struct RoutinesHome: View {
                 Text("This removes the routine and its selected exercises from your list.")
             }
             .toolbar(.hidden, for: .navigationBar)
+            // pushes routines to watch
+            .onAppear {
+                connectivityManager.syncTemplates(routines)
+            }
+            .onChange(of: routines) { _, updated in
+                connectivityManager.syncTemplates(updated)
+            }
+            // updates upon completing workout
+            .onChange(of: connectivityManager.pendingCompletedWorkout) { _, payload in
+                guard let payload else { return }
+                let workout = CompletedWorkout(from: payload)
+                modelContext.insert(workout)
+                try? modelContext.save()
+                connectivityManager.pendingCompletedWorkout = nil
+            }
         }
     }
     private func deleteRoutine(_ routine: WorkoutTemplate) {
