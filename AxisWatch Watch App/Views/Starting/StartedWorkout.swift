@@ -3,6 +3,10 @@ import SwiftUI
 struct StartedWorkout: View {
     let session: WatchWorkoutSession
     let onComplete: (WatchCompletedWorkoutPayload) -> Void
+    let onCancel: () -> Void
+
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var showingEndAlert = false
 
     var body: some View {
         TimelineView(.periodic(from: session.startedAt, by: 1)) { context in
@@ -92,6 +96,16 @@ struct StartedWorkout: View {
                 }
             }
         }
+        .alert("Workout Paused", isPresented: $showingEndAlert) {
+            Button("Resume", role: .cancel) {}
+            Button("End Workout") { onComplete(session.buildPayload()) }
+            Button("Cancel Workout", role: .destructive) { onCancel() }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .inactive && !session.isComplete {
+                showingEndAlert = true
+            }
+        }
         .onChange(of: session.isComplete) { _, complete in
             if complete { onComplete(session.buildPayload()) }
         }
@@ -124,5 +138,5 @@ struct StartedWorkout: View {
             WatchExercisePayload(name: "Shoulder Press", targetSets: 3, targetReps: 10, orderIndex: 1),
         ]
     ))
-    StartedWorkout(session: session, onComplete: { _ in })
+    StartedWorkout(session: session, onComplete: { _ in }, onCancel: {})
 }

@@ -21,6 +21,8 @@ struct ContentView: View {
         } else if let session {
             StartedWorkout(session: session) { payload in
                 self.completedPayload = payload
+            } onCancel: {
+                self.session = nil
             }
         } else if let selectedTemplate {
             SelectingWorkout(template: selectedTemplate) {
