@@ -126,6 +126,10 @@ struct Greeting: View {
             withAnimation(.easeOut(duration: 0.7)) { showTitle = true }
             withAnimation(.easeOut(duration: 0.8).delay(0.35)) { showLine1 = true }
             withAnimation(.easeOut(duration: 0.8).delay(0.65)) { showLine2 = true }
+            Task {
+                try? await Task.sleep(for: .seconds(3))
+                onComplete?()
+            }
         }
     }
 }

@@ -167,23 +167,28 @@ struct RoutinesHome: View {
                 Text("This removes the routine and its selected exercises from your list.")
             }
             .toolbar(.hidden, for: .navigationBar)
-            // pushes routines to watch
+            // pushes routines to watch + drains any payload that arrived before view appeared
             .onAppear {
                 connectivityManager.syncTemplates(routines)
+                savePendingWorkoutIfNeeded()
             }
             .onChange(of: routines) { _, updated in
                 connectivityManager.syncTemplates(updated)
             }
             // updates upon completing workout
-            .onChange(of: connectivityManager.pendingCompletedWorkout) { _, payload in
-                guard let payload else { return }
-                let workout = CompletedWorkout(from: payload)
-                modelContext.insert(workout)
-                try? modelContext.save()
-                connectivityManager.pendingCompletedWorkout = nil
+            .onChange(of: connectivityManager.pendingCompletedWorkout) { _, _ in
+                savePendingWorkoutIfNeeded()
             }
         }
     }
+    private func savePendingWorkoutIfNeeded() {
+        guard let payload = connectivityManager.pendingCompletedWorkout else { return }
+        let workout = CompletedWorkout(from: payload)
+        modelContext.insert(workout)
+        try? modelContext.save()
+        connectivityManager.pendingCompletedWorkout = nil
+    }
+
     private func deleteRoutine(_ routine: WorkoutTemplate) {
         modelContext.delete(routine)
 

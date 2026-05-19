@@ -54,12 +54,19 @@ final class PhoneConnectivityManager: NSObject, WCSessionDelegate, ObservableObj
         DispatchQueue.main.async { self.isWatchReachable = session.isReachable }
     }
 
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        handleWorkoutData(message)
+    }
+
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any]) {
+        handleWorkoutData(userInfo)
+    }
+
+    private func handleWorkoutData(_ dict: [String: Any]) {
         guard
-            let data = userInfo[WatchMessageKey.completedWorkout] as? Data,
+            let data = dict[WatchMessageKey.completedWorkout] as? Data,
             let payload = try? JSONDecoder().decode(WatchCompletedWorkoutPayload.self, from: data)
         else { return }
-
         DispatchQueue.main.async { self.pendingCompletedWorkout = payload }
     }
 }

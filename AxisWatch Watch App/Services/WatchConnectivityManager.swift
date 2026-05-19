@@ -16,7 +16,16 @@ final class WatchConnectivityManager: NSObject, WCSessionDelegate {
 
     func sendCompletedWorkout(_ payload: WatchCompletedWorkoutPayload) {
         guard let data = try? JSONEncoder().encode(payload) else { return }
-        WCSession.default.transferUserInfo([WatchMessageKey.completedWorkout: data])
+        let message = [WatchMessageKey.completedWorkout: data]
+
+        if WCSession.default.isReachable {
+            WCSession.default.sendMessage(message, replyHandler: nil) { _ in
+                // phone not reachable in time — queue for background delivery
+                WCSession.default.transferUserInfo(message)
+            }
+        } else {
+            WCSession.default.transferUserInfo(message)
+        }
     }
 
 

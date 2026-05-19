@@ -79,11 +79,14 @@ struct StartedWorkout: View {
                         Spacer()
 
                         if isOnFinalSet {
-                            Image(systemName: "checkmark")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundStyle(.white)
-                                .frame(width: 36, height: 36)
-                                .glassEffect(in: Circle())
+                            Button(action: { session.completeSet() }) {
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundStyle(.white)
+                                    .frame(width: 36, height: 36)
+                                    .glassEffect(in: Circle())
+                            }
+                            .buttonStyle(.plain)
                         } else if let exercise = session.currentExercise {
                             Text(exercise.setProgressText)
                                 .font(.system(size: 18, weight: .medium))
