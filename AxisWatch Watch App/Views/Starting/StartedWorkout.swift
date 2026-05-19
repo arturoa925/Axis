@@ -74,7 +74,13 @@ struct StartedWorkout: View {
 
                         Spacer()
 
-                        if let exercise = session.currentExercise {
+                        if isOnFinalSet {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundStyle(.white)
+                                .frame(width: 36, height: 36)
+                                .glassEffect(in: Circle())
+                        } else if let exercise = session.currentExercise {
                             Text(exercise.setProgressText)
                                 .font(.system(size: 18, weight: .medium))
                                 .foregroundStyle(.white)
@@ -89,6 +95,11 @@ struct StartedWorkout: View {
         .onChange(of: session.isComplete) { _, complete in
             if complete { onComplete(session.buildPayload()) }
         }
+    }
+
+    private var isOnFinalSet: Bool {
+        guard let exercise = session.currentExercise else { return false }
+        return session.isOnLastExercise && exercise.completedSets >= exercise.targetSets - 1
     }
 
     private func elapsedText(_ interval: TimeInterval) -> String {
