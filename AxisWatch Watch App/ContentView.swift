@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @Environment(WatchConnectivityManager.self) private var connectivity
     @AppStorage("hasGreeted") private var hasGreeted = false
+    @State private var selectedTemplate: WatchTemplatePayload? = nil
     @State private var session: WatchWorkoutSession? = nil
     @State private var completedPayload: WatchCompletedWorkoutPayload? = nil
 
@@ -21,11 +22,18 @@ struct ContentView: View {
             StartedWorkout(session: session) { payload in
                 self.completedPayload = payload
             }
+        } else if let selectedTemplate {
+            SelectingWorkout(template: selectedTemplate) {
+                let s = WatchWorkoutSession()
+                s.start(template: selectedTemplate)
+                self.session = s
+                self.selectedTemplate = nil
+            } onCancel: {
+                self.selectedTemplate = nil
+            }
         } else {
             WorkoutSelector(templates: connectivity.templates) { template in
-                let s = WatchWorkoutSession()
-                s.start(template: template)
-                self.session = s
+                self.selectedTemplate = template
             }
         }
     }
