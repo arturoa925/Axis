@@ -8,6 +8,9 @@
 import SwiftUI
 import SwiftData
 
+// default home view
+// tab nav is saved in RoutinesHome
+
 struct MainTabView: View {
     var body: some View {
         RoutinesHome()
@@ -20,8 +23,6 @@ struct MainTabView: View {
             Exercise.self,
             TemplateExercise.self,
             WorkoutTemplate.self,
-            // ActiveExercise.self,
-            // ActiveWorkout.self,
             CompletedExercise.self,
             CompletedWorkout.self
         ], inMemory: true)

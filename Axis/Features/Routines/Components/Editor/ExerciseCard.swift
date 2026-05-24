@@ -1,9 +1,4 @@
-//
-//  ExerciseCard.swift
-//  Axis
-//
-//  Created by Arturo Ayala on 5/7/26.
-//
+
 
 import SwiftUI
 import SwiftData
@@ -16,6 +11,7 @@ struct ExerciseCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
+            // holds the essential data
             HStack(spacing: 14) {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(exercise.exercise.name)
@@ -31,6 +27,7 @@ struct ExerciseCard: View {
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 8) {
+                    // button to expand
                     Button {
                         withAnimation(.smooth(duration: 0.28)) {
                             expandedExerciseID = expandedExerciseID == exercise.id ? nil : exercise.id
@@ -55,6 +52,7 @@ struct ExerciseCard: View {
                 }
             }
 
+            // controls to modify exercise goals
             if expandedExerciseID == exercise.id {
                 HStack(spacing: 12) {
                     targetControl(

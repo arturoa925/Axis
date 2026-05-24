@@ -1,5 +1,4 @@
-// saves exercise details
-// connects to a routine
+// turns normal exercise into one palettable for a template or routine
 
 import Foundation
 import SwiftData

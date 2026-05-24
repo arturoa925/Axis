@@ -1,9 +1,4 @@
-//
-//  OnboardingGuide.swift
-//  Axis
-//
-//  Created by Arturo Ayala on 4/21/26.
-//
+// shell for holding the watch connection status text
 
 import SwiftUI
 

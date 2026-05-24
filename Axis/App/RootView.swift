@@ -1,9 +1,12 @@
 import SwiftUI
 
 struct RootView: View {
+    // brings app state
     @EnvironmentObject var appState: AppState
     @State private var onboardingStep: OnboardingStep = .launch
 
+    // 4 step sequence
+    // after opening once, guide step is skipped
     var body: some View {
         ZStack {
             AppColors.background
@@ -42,6 +45,7 @@ struct RootView: View {
             }
         }
 
+        // skip determining step
         DispatchQueue.main.asyncAfter(deadline: .now() + 6.2) {
             withAnimation(.easeInOut(duration: 0.75)) {
                 onboardingStep = appState.hasCompletedOnboarding ? .main : .guide

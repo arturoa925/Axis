@@ -1,4 +1,4 @@
-
+// initial animation with bubbles and app title text
 import SwiftUI
 
 struct LaunchAnimation: View {

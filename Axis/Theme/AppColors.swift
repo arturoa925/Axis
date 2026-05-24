@@ -3,25 +3,25 @@ import SwiftUI
 
 struct AppColors {
 
-    // MARK: - Backgrounds
+    //Backgrounds
     static let background = Color(hex: "#D8CFC4")
     // light blue
     static let cardBackground = Color(hex: "#D0DAFF")
 
-    // MARK: - Text
+    // Text
     // navy
     static let TextBlue = Color(hex: "#5B7AC5")
     static let TextBrown = Color(hex: "#774B1C")
     static let TextWhite = Color(hex: "#FFFFFF")
     static let TextBlack = Color(hex: "#000000")
 
-    // MARK: - Status
+    //Status
     static let success = Color.blue
     static let warning = Color.orange
     static let error = Color.red
 }
 
-// MARK: - Hex Support
+//  Hex Support
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

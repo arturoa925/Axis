@@ -3,11 +3,12 @@ import SwiftUI
 struct WorkoutHistoryCard: View {
     let workout: CompletedWorkout
 
-    // time and date formatting
+    // date formatting
     private var formattedDate: String {
         workout.completedAt.formatted(date: .abbreviated, time: .omitted)
     }
 
+    // time formatting
     private var formattedDuration: String {
         let total = Int(workout.elapsedTime)
         let h = total / 3600

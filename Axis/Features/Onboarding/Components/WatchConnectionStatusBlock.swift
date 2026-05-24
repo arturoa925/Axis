@@ -3,12 +3,14 @@
 import SwiftUI
 
 struct WatchConnectionStatusBlock: View {
+    
     enum ConnectionState {
         case checking
         case connected
         case failed
     }
 
+    // default state
     @State private var connectionState: ConnectionState = .checking
    
 

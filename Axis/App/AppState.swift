@@ -7,3 +7,5 @@ import Combine
 final class AppState: ObservableObject {
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
 }
+
+// saves even after closing app

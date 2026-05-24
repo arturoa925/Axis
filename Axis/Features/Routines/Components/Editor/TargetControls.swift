@@ -1,9 +1,4 @@
-//
-//  TargetControls.swift
-//  Axis
-//
-//  Created by Arturo Ayala on 5/7/26.
-//
+
 
 import SwiftUI
 
@@ -14,12 +9,14 @@ struct TargetControl: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+            // title refers to the trait being modified
             Text(title)
                 .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
                 .foregroundStyle(.white.opacity(0.9))
 
             HStack(spacing: 12) {
                 Button {
+                    // ensures cant reach 0 or set goals
                     guard value > range.lowerBound else { return }
                     withAnimation(.smooth(duration: 0.18)) {
                         value -= 1
@@ -33,6 +30,7 @@ struct TargetControl: View {
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(.white.opacity(value > range.lowerBound ? 0.86 : 0.28))
+                // lets user know minus is disabled
                 .disabled(value <= range.lowerBound)
 
                 Text("\(value)")

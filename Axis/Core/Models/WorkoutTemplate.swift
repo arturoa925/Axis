@@ -1,6 +1,5 @@
 
-// saves template exercise and placse them in order
-// saved routine
+// a collection of template exercises 
 
 import Foundation
 import SwiftData

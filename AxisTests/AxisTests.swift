@@ -2,7 +2,7 @@ import Testing
 import Foundation
 @testable import Axis
 
-// MARK: - Test Helpers
+//  Test Helpers
 
 private func makeTemplate(
     name: String = "Test Routine",
@@ -15,12 +15,12 @@ private func makeTemplate(
     return WorkoutTemplate(name: name, exercises: templateExercises)
 }
 
-// MARK: - WorkoutSessionManager
+//  WorkoutSessionManager
 
 @Suite("WorkoutSessionManager")
 struct WorkoutSessionManagerTests {
 
-    // MARK: Starting a Workout
+    //  Starting a Workout
 
     @Test func startWorkout_setsActiveWorkout() {
         let manager = WorkoutSessionManager()
@@ -53,7 +53,7 @@ struct WorkoutSessionManagerTests {
         #expect(manager.currentExercise?.name == "Bench Press")
     }
 
-    // MARK: Rep Tracking
+    // Rep Tracking
 
     @Test func incrementRep_increasesCount() {
         let manager = WorkoutSessionManager()
@@ -106,7 +106,7 @@ struct WorkoutSessionManagerTests {
         #expect(manager.currentExercise?.currentRepCount == 1)
     }
 
-    // MARK: Set Completion
+    //  Set Completion
 
     @Test func completeSet_incrementsCompletedSets() {
         let manager = WorkoutSessionManager()
@@ -172,7 +172,7 @@ struct WorkoutSessionManagerTests {
         #expect(manager.didCompleteWorkout == true)
     }
 
-    // MARK: Pause & Resume
+    //  Pause & Resume
 
     @Test func pauseWorkout_setsIsPaused() {
         let manager = WorkoutSessionManager()
@@ -193,7 +193,7 @@ struct WorkoutSessionManagerTests {
         #expect(manager.activeWorkout?.isPaused == false)
     }
 
-    // MARK: Timer
+    //  Timer
 
     @Test func tickElapsedTime_incrementsTime() {
         let manager = WorkoutSessionManager()
@@ -216,7 +216,7 @@ struct WorkoutSessionManagerTests {
         #expect(manager.activeWorkout?.elapsedTime == 0)
     }
 
-    // MARK: Navigation
+    // Navigation
 
     @Test func goToNextExercise_advancesIndex() {
         let manager = WorkoutSessionManager()
@@ -255,7 +255,7 @@ struct WorkoutSessionManagerTests {
         #expect(manager.activeWorkout?.currentExerciseIndex == 0)
     }
 
-    // MARK: First / Last Exercise Flags
+    // First / Last Exercise Flags
 
     @Test func isOnFirstExercise_trueAtStart() {
         let manager = WorkoutSessionManager()
@@ -288,7 +288,7 @@ struct WorkoutSessionManagerTests {
         #expect(manager.isOnLastExercise == true)
     }
 
-    // MARK: Finish & Cancel
+    // Finish & Cancel
 
     @Test func finishWorkout_returnsCompletedWorkout() {
         let manager = WorkoutSessionManager()
@@ -326,7 +326,7 @@ struct WorkoutSessionManagerTests {
     }
 }
 
-// MARK: - CompletedWorkout
+//  CompletedWorkout
 
 @Suite("CompletedWorkout")
 struct CompletedWorkoutTests {
@@ -408,7 +408,7 @@ struct CompletedWorkoutTests {
     }
 }
 
-// MARK: - ActiveExercise
+//  ActiveExercise
 
 @Suite("ActiveExercise")
 struct ActiveExerciseTests {

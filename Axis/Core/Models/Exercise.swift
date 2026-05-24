@@ -1,5 +1,7 @@
 
 // exercise library
+// persistent model
+
 import Foundation
 import SwiftData
 

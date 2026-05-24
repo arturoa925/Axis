@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct HistoryView: View {
+    // sorted by most recently completed
     @Query(sort: \CompletedWorkout.completedAt, order: .reverse)
     private var workouts: [CompletedWorkout]
 
@@ -19,6 +20,7 @@ struct HistoryView: View {
 
                 if workouts.isEmpty {
                     Spacer()
+                    // fallback
                     emptyState
                     Spacer()
                 } else {

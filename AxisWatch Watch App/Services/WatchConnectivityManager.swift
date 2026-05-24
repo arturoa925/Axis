@@ -3,6 +3,7 @@ import WatchConnectivity
 import Observation
 
 @Observable
+// watch counterpart to connect to iphone
 final class WatchConnectivityManager: NSObject, WCSessionDelegate {
     var templates: [WatchTemplatePayload] = []
     var isPhoneReachable: Bool = false
@@ -24,6 +25,7 @@ final class WatchConnectivityManager: NSObject, WCSessionDelegate {
                 WCSession.default.transferUserInfo(message)
             }
         } else {
+            // phone not reachable since beginning - use this
             WCSession.default.transferUserInfo(message)
         }
     }

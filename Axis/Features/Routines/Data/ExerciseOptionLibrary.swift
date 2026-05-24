@@ -1,9 +1,4 @@
-//
-//  ExerciseOptionLibrary.swift
-//  Axis
-//
-//  Created by Arturo Ayala on 4/28/26.
-//
+
 
 enum ExerciseOptionLibrary {
     static let all: [ExerciseOption] = [

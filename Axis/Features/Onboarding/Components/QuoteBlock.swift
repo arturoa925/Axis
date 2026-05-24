@@ -3,6 +3,7 @@
 import SwiftUI
 
 struct QuoteBlock: View {
+    // give each line a var
     @State private var showWelcome = false
     @State private var showFirstLine = false
     @State private var showSecondLine = false
@@ -35,6 +36,7 @@ struct QuoteBlock: View {
             }
             .multilineTextAlignment(.center)
         }
+        // text sequence
         .onAppear {
             withAnimation(.easeOut(duration: 0.7)) {
                 showWelcome = true

@@ -1,22 +1,16 @@
-//
-//  AddExerciseSection.swift
-//  Axis
-//
-//  Created by Arturo Ayala on 5/7/26.
-//
 
 import SwiftUI
 import SwiftData
 
 struct AddExerciseSection: View {
     @Bindable var routine: WorkoutTemplate
-
     @Binding var exerciseSearchText: String
     @Binding var selectedEquipment: EquipmentType
     @Binding var isAddPanelExpanded: Bool
     let addPanelDragGesture: AnyGesture<DragGesture.Value>
     @Query(sort: \Exercise.name) private var exerciseLibrary: [Exercise]
 
+    // filter by equipment or search field
     private var filteredExercises: [Exercise] {
         exerciseLibrary
             .filter { $0.equipment.lowercased() == selectedEquipment.rawValue.lowercased() }
@@ -27,6 +21,7 @@ struct AddExerciseSection: View {
     let saveChanges: () -> Void
     let removeExercise: (TemplateExercise) -> Void
 
+    // shell for holding both components in this view
     var body: some View {
         VStack(spacing: 12) {
             addExercisePanel
@@ -34,6 +29,7 @@ struct AddExerciseSection: View {
         }
     }
 
+    // adding exercises
     private var addExercisePanel: some View {
         VStack(alignment: .leading, spacing: 12) {
             Button {
@@ -41,6 +37,7 @@ struct AddExerciseSection: View {
                     isAddPanelExpanded.toggle()
                 }
             } label: {
+                // the full rectangle
                 Capsule()
                     .fill(.white.opacity(0.28))
                     .frame(width: 42, height: 5)
@@ -87,6 +84,7 @@ struct AddExerciseSection: View {
                     .stroke(.white.opacity(0.12), lineWidth: 1)
             }
 
+            // applicable when capsule is not expanded
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(EquipmentType.allCases) { equipment in
@@ -110,6 +108,7 @@ struct AddExerciseSection: View {
 
             if isAddPanelExpanded {
                 ScrollView(showsIndicators: false) {
+                    // adaptive to list of exercises available
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 145), spacing: 10)], spacing: 10) {
                         ForEach(filteredExercises) { option in
                             addExerciseChip(option)
@@ -120,6 +119,7 @@ struct AddExerciseSection: View {
                 }
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
             } else {
+                // revert to default view when closing the expansion
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
                         ForEach(filteredExercises) { option in
@@ -140,6 +140,7 @@ struct AddExerciseSection: View {
     }
 
     private func addExerciseChip(_ option: Exercise) -> some View {
+        // will highlight those that alrady added
         let isAlreadyAdded = routine.exercises.contains { $0.exercise.name == option.name }
 
         return Button {
@@ -156,6 +157,7 @@ struct AddExerciseSection: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.82)
 
+                // alrady added modifications
                 if isAlreadyAdded {
                     Text("Added")
                         .font(.custom("NotoSans-Regular", size: 11, relativeTo: .caption2))
@@ -180,6 +182,7 @@ struct AddExerciseSection: View {
         .accessibilityLabel(isAlreadyAdded ? "Remove \(option.name) from routine" : "Add \(option.name) to routine")
     }
 
+    // save button component
     private var saveButton: some View {
         Button {
             saveChanges()
@@ -195,6 +198,7 @@ struct AddExerciseSection: View {
         .buttonStyle(.plain)
     }
 
+    // determines if the exercise should be added
     private func toggleExercise(_ exercise: Exercise) {
         withAnimation(.smooth(duration: 0.28)) {
             if let existingExercise = routine.exercises.first(where: { $0.exercise.name == exercise.name }) {

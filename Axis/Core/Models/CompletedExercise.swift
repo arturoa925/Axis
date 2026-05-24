@@ -1,4 +1,4 @@
-// finished history snapshot of an exercise
+// finished snapshot of an exercise
 
 import Foundation
 import SwiftData

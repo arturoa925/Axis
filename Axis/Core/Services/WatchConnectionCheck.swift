@@ -8,13 +8,15 @@ final class PhoneConnectivityManager: NSObject, WCSessionDelegate, ObservableObj
 
     override init() {
         super.init()
+        // makes sure watch connection is supported
         guard WCSession.isSupported() else { return }
         // registers watch
         WCSession.default.delegate = self
+        // opens communications
         WCSession.default.activate()
     }
 
-    // light weight copy of model
+    // light weight copy of model for watch
     func syncTemplates(_ templates: [WorkoutTemplate]) {
         guard WCSession.default.activationState == .activated else { return }
 
@@ -54,14 +56,18 @@ final class PhoneConnectivityManager: NSObject, WCSessionDelegate, ObservableObj
         DispatchQueue.main.async { self.isWatchReachable = session.isReachable }
     }
 
+    // fires when both devices are avaible
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         handleWorkoutData(message)
     }
 
+    // delivers whenevr the phone is available, more force
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any]) {
         handleWorkoutData(userInfo)
     }
 
+    // unpacks data from completed workout
+    // moves to main thread to update history UI
     private func handleWorkoutData(_ dict: [String: Any]) {
         guard
             let data = dict[WatchMessageKey.completedWorkout] as? Data,

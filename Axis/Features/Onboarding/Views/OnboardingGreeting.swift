@@ -1,9 +1,4 @@
-//
-//  OnboardingGreeting.swift
-//  Axis
-//
-//  Created by Arturo Ayala on 4/21/26.
-//
+// shell to hold the rolling quotes
 
 import SwiftUI
 
