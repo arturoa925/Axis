@@ -1,18 +1,21 @@
 
-
 import SwiftUI
 
 struct WatchConnectionStatusBlock: View {
-    
+
     enum ConnectionState {
         case checking
         case connected
         case failed
     }
 
-    // default state
-    @State private var connectionState: ConnectionState = .checking
-   
+    @EnvironmentObject private var connectivityManager: PhoneConnectivityManager
+
+    // must establish watch connection type first
+    private var connectionState: ConnectionState {
+        guard connectivityManager.isActivated else { return .checking }
+        return connectivityManager.isWatchReachable ? .connected : .failed
+    }
 
     var body: some View {
         ZStack {
@@ -43,14 +46,6 @@ struct WatchConnectionStatusBlock: View {
                 .padding(.top, 8)
             }
             .padding(.horizontal, 28)
-        }
-        .onAppear {
-         
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
-                connectionState = .connected
-                // Change to `.failed` to preview failure state.
-            }
         }
     }
 
@@ -94,4 +89,5 @@ struct WatchConnectionStatusBlock: View {
 
 #Preview {
     WatchConnectionStatusBlock()
+        .environmentObject(PhoneConnectivityManager())
 }

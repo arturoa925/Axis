@@ -2,8 +2,10 @@ import Foundation
 import Combine
 import WatchConnectivity
 
+// checking for watch connection from iphone
 final class PhoneConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
     @Published var isWatchReachable: Bool = false
+    @Published var isActivated: Bool = false
     @Published var pendingCompletedWorkout: WatchCompletedWorkoutPayload?
 
     override init() {
@@ -43,7 +45,10 @@ final class PhoneConnectivityManager: NSObject, WCSessionDelegate, ObservableObj
 
 
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        DispatchQueue.main.async { self.isWatchReachable = session.isReachable }
+        DispatchQueue.main.async {
+            self.isActivated = true
+            self.isWatchReachable = session.isReachable
+        }
     }
 
     func sessionDidBecomeInactive(_ session: WCSession) {}
