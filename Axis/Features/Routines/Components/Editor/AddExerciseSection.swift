@@ -9,13 +9,14 @@ struct AddExerciseSection: View {
     @Binding var isAddPanelExpanded: Bool
     let addPanelDragGesture: AnyGesture<DragGesture.Value>
     @Query(sort: \Exercise.name) private var exerciseLibrary: [Exercise]
+    @Environment(\.modelContext) private var modelContext
 
-    // filter by equipment or search field
-    private var filteredExercises: [Exercise] {
-        exerciseLibrary
-            .filter { $0.equipment.lowercased() == selectedEquipment.rawValue.lowercased() }
-            .filter { exercise in
-                exerciseSearchText.isEmpty || exercise.name.localizedCaseInsensitiveContains(exerciseSearchText)
+    // filter the static library — not SwiftData — so all equipment types are always visible
+    private var filteredExercises: [ExerciseOption] {
+        ExerciseOptionLibrary.all
+            .filter { $0.equipment == selectedEquipment }
+            .filter { option in
+                exerciseSearchText.isEmpty || option.name.localizedCaseInsensitiveContains(exerciseSearchText)
             }
     }
     let saveChanges: () -> Void
@@ -139,8 +140,7 @@ struct AddExerciseSection: View {
         }
     }
 
-    private func addExerciseChip(_ option: Exercise) -> some View {
-        // will highlight those that alrady added
+    private func addExerciseChip(_ option: ExerciseOption) -> some View {
         let isAlreadyAdded = routine.exercises.contains { $0.exercise.name == option.name }
 
         return Button {
@@ -198,12 +198,16 @@ struct AddExerciseSection: View {
         .buttonStyle(.plain)
     }
 
-    // determines if the exercise should be added
-    private func toggleExercise(_ exercise: Exercise) {
+    private func toggleExercise(_ option: ExerciseOption) {
         withAnimation(.smooth(duration: 0.28)) {
-            if let existingExercise = routine.exercises.first(where: { $0.exercise.name == exercise.name }) {
-                removeExercise(existingExercise)
+            if let existingTemplateExercise = routine.exercises.first(where: { $0.exercise.name == option.name }) {
+                removeExercise(existingTemplateExercise)
             } else {
+                let exercise = exerciseLibrary.first(where: { $0.name == option.name }) ?? {
+                    let new = Exercise(name: option.name, equipment: option.equipment.rawValue)
+                    modelContext.insert(new)
+                    return new
+                }()
                 let templateExercise = TemplateExercise(
                     orderIndex: routine.exercises.count,
                     exercise: exercise,
