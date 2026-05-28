@@ -54,6 +54,7 @@ struct AddExerciseSection: View {
                 Image(systemName: "magnifyingglass")
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
 
                 TextField("Add another exercise", text: $exerciseSearchText)
                     .font(.custom("NotoSans-Regular", size: 15, relativeTo: .body))
@@ -103,6 +104,7 @@ struct AddExerciseSection: View {
                                 .clipShape(Capsule())
                         }
                         .buttonStyle(.plain)
+                        .accessibilityAddTraits(selectedEquipment == equipment ? .isSelected : [])
                     }
                 }
             }

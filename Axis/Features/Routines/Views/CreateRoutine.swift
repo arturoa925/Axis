@@ -73,6 +73,7 @@ struct CreateRoutine: View {
                                 Image(systemName: "magnifyingglass")
                                     .font(.system(size: 15, weight: .semibold))
                                     .foregroundStyle(.secondary)
+                                    .accessibilityHidden(true)
 
                                 TextField("Search exercises", text: $exerciseSearchText)
                                     .font(.custom("NotoSans-Regular", size: 15, relativeTo: .body))
@@ -110,6 +111,7 @@ struct CreateRoutine: View {
                                                 }
                                         }
                                         .buttonStyle(.plain)
+                                        .accessibilityAddTraits(selectedEquipment == equipment ? .isSelected : [])
                                     }
                                 }
                                 .padding(.vertical, 2)
@@ -129,13 +131,15 @@ struct CreateRoutine: View {
                             } else {
                                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 10)], spacing: 10) {
                                     ForEach(filteredExercises) { exercise in
+                                        let isSelected = selectedExercises.contains(where: { $0.option.name == exercise.name })
                                         Button {
                                             toggleExerciseSelection(exercise)
                                         } label: {
                                             HStack(spacing: 10) {
-                                                Image(systemName: selectedExercises.contains(where: { $0.option.name == exercise.name }) ? "checkmark.circle.fill" : "plus.circle.fill")
+                                                Image(systemName: isSelected ? "checkmark.circle.fill" : "plus.circle.fill")
                                                     .font(.system(size: 18, weight: .semibold))
-                                                    .foregroundStyle(selectedExercises.contains(where: { $0.option.name == exercise.name }) ? .green : AppColors.TextBlue)
+                                                    .foregroundStyle(isSelected ? .green : AppColors.TextBlue)
+                                                    .accessibilityHidden(true)
 
                                                 Text(exercise.name)
                                                     .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
@@ -156,6 +160,8 @@ struct CreateRoutine: View {
                                             }
                                         }
                                         .buttonStyle(.plain)
+                                        .accessibilityLabel(isSelected ? "Remove \(exercise.name)" : "Add \(exercise.name)")
+                                        .accessibilityAddTraits(isSelected ? .isSelected : [])
                                     }
                                 }
                             }
@@ -196,6 +202,7 @@ struct CreateRoutine: View {
                                                         .font(.system(size: 15, weight: .bold))
                                                         .foregroundStyle(AppColors.TextBlue)
                                                 }
+                                                .accessibilityHidden(true)
 
                                                 VStack(alignment: .leading, spacing: 4) {
                                                     Text(exercise.option.name)
@@ -213,10 +220,12 @@ struct CreateRoutine: View {
                                                 Image(systemName: exercise.isExpanded ? "chevron.up.circle.fill" : "chevron.down.circle.fill")
                                                     .font(.system(size: 22, weight: .semibold))
                                                     .foregroundStyle(.white.opacity(0.38))
+                                                    .accessibilityHidden(true)
                                             }
                                             .contentShape(Rectangle())
                                         }
                                         .buttonStyle(.plain)
+                                        .accessibilityLabel("\(exercise.option.name), \(exercise.targetSets) sets, \(exercise.targetReps) reps. \(exercise.isExpanded ? "Collapse" : "Expand") targets")
 
                                         if exercise.isExpanded {
                                             VStack(spacing: 12) {
@@ -363,6 +372,21 @@ struct CreateRoutine: View {
         .overlay {
             RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(title)
+        .accessibilityValue("\(value.wrappedValue)")
+        .accessibilityAdjustableAction { direction in
+            switch direction {
+            case .increment:
+                guard value.wrappedValue < range.upperBound else { return }
+                withAnimation(.smooth(duration: 0.18)) { value.wrappedValue += 1 }
+            case .decrement:
+                guard value.wrappedValue > range.lowerBound else { return }
+                withAnimation(.smooth(duration: 0.18)) { value.wrappedValue -= 1 }
+            @unknown default:
+                break
+            }
         }
     }
 

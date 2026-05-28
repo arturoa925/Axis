@@ -64,6 +64,21 @@ struct TargetControl: View {
             RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(title)
+        .accessibilityValue("\(value)")
+        .accessibilityAdjustableAction { direction in
+            switch direction {
+            case .increment:
+                guard value < range.upperBound else { return }
+                withAnimation(.smooth(duration: 0.18)) { value += 1 }
+            case .decrement:
+                guard value > range.lowerBound else { return }
+                withAnimation(.smooth(duration: 0.18)) { value -= 1 }
+            @unknown default:
+                break
+            }
+        }
     }
 }
 #Preview {

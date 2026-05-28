@@ -41,6 +41,7 @@ struct SelectingWorkout: View {
                             .glassEffect(in: Circle())
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel("Cancel")
                     Spacer()
                 }
                 .padding(.leading, 14)

@@ -60,6 +60,8 @@ private struct RoutineCard: View {
             )
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("\(template.name), \(template.exercises.count) exercises")
+        .accessibilityHint("Double tap to select this routine")
     }
 }
 

@@ -38,6 +38,7 @@ struct RoutinesHome: View {
                                     Image(systemName: "list.bullet.clipboard")
                                         .font(.system(size: 34))
                                         .foregroundStyle(.white.opacity(0.8))
+                                        .accessibilityHidden(true)
 
                                     Text("Create your first routine")
                                         .font(.custom("NotoSans-Regular", size: 17, relativeTo: .body))
@@ -68,6 +69,10 @@ struct RoutinesHome: View {
                                         .onLongPressGesture {
                                             routineToDelete = routine
                                         }
+                                        .accessibilityElement(children: .ignore)
+                                        .accessibilityLabel("\(routine.name), \(routine.exercises.count) exercises")
+                                        .accessibilityHint("Double tap to open. Long press to delete.")
+                                        .accessibilityAction(named: "Delete") { routineToDelete = routine }
                                     }
                                 }
                                 .padding(.horizontal, 20)
@@ -200,7 +205,8 @@ struct RoutinesHome: View {
     }
 
     private func routineTabButton(tab: RoutineHomeTab, systemImage: String) -> some View {
-        Button {
+        let tabName = tab == .routines ? "Routines" : "History"
+        return Button {
             withAnimation(.smooth(duration: 0.25)) {
                 selectedTab = tab
             }
@@ -218,6 +224,8 @@ struct RoutinesHome: View {
             }
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(tabName)
+        .accessibilityAddTraits(selectedTab == tab ? .isSelected : [])
     }
 }
 

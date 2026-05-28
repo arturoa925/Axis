@@ -55,11 +55,13 @@ struct WatchConnectionStatusBlock: View {
         case .checking:
             ProgressView()
                 .tint(AppColors.TextBlue)
+                .accessibilityLabel("Checking for Apple Watch connection")
 
         case .connected:
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 28, weight: .semibold))
                 .foregroundStyle(.blue)
+                .accessibilityLabel("Apple Watch connected")
 
         case .failed:
             VStack(spacing: 10) {

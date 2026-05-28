@@ -41,6 +41,7 @@ struct StartedWorkout: View {
                                 .background(Circle().fill(Color(hex: "#315BFF")))
                         }
                         .buttonStyle(.plain)
+                        .accessibilityLabel("Decrease reps")
 
                         Spacer()
 
@@ -49,6 +50,7 @@ struct StartedWorkout: View {
                             .foregroundStyle(.white)
                             .frame(width: 66, height: 66)
                             .background(Circle().fill(WatchColors.cardBackground))
+                            .accessibilityLabel("\(session.currentExercise?.currentReps ?? 0) reps")
 
                         Spacer()
 
@@ -60,6 +62,7 @@ struct StartedWorkout: View {
                                 .background(Circle().fill(Color(hex: "#315BFF")))
                         }
                         .buttonStyle(.plain)
+                        .accessibilityLabel("Increase reps")
                     }
                     .padding(.horizontal, 16)
                     .padding(.bottom, 14)
@@ -75,6 +78,7 @@ struct StartedWorkout: View {
                                 .glassEffect(in: Circle())
                         }
                         .buttonStyle(.plain)
+                        .accessibilityLabel("Complete set")
 
                         Spacer()
 
@@ -87,6 +91,7 @@ struct StartedWorkout: View {
                                     .glassEffect(in: Circle())
                             }
                             .buttonStyle(.plain)
+                            .accessibilityLabel("Complete workout")
                         } else if let exercise = session.currentExercise {
                             Text(exercise.setProgressText)
                                 .font(.system(size: 18, weight: .medium))

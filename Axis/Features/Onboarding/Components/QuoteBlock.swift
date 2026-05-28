@@ -35,6 +35,8 @@ struct QuoteBlock: View {
                 }
             }
             .multilineTextAlignment(.center)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Welcome. Small Actions. Repeated Daily.")
         }
         // text sequence
         .onAppear {

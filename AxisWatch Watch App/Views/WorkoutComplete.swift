@@ -36,6 +36,7 @@ struct WorkoutComplete: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .padding(.bottom, 6)
+                    .accessibilityLabel("Workout duration: \(formattedDuration)")
 
                 // ── BOTTOM: next button ────────────────────────────────
                 Button(action: onDismiss) {
@@ -46,6 +47,7 @@ struct WorkoutComplete: View {
                         .glassEffect(in: Circle())
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Done")
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 .padding(.bottom, 10)
             }

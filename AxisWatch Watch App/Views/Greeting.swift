@@ -131,6 +131,8 @@ struct Greeting: View {
                 onComplete?()
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Axis. Small Actions. Repeated Daily.")
     }
 }
 

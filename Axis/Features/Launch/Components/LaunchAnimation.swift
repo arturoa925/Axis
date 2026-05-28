@@ -162,6 +162,8 @@ struct LaunchAnimation: View {
             animate = true
             drift = true
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Axis")
     }
 }
 

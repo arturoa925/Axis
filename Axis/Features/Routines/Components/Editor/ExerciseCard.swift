@@ -45,6 +45,7 @@ struct ExerciseCard: View {
                             }
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel(expandedExerciseID == exercise.id ? "Collapse targets for \(exercise.exercise.name)" : "Expand targets for \(exercise.exercise.name)")
 
                     Text("\(exercise.targetSets) × \(exercise.targetReps)")
                         .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))

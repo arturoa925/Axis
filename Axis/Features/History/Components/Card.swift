@@ -38,10 +38,12 @@ struct WorkoutHistoryCard: View {
                 Image(systemName: "clock")
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(AppColors.TextBlue.opacity(0.7))
+                    .accessibilityHidden(true)
 
                 Text(formattedDuration)
                     .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
                     .foregroundStyle(AppColors.TextBlue.opacity(0.7))
+                    .accessibilityLabel("Duration: \(formattedDuration)")
             }
 
             Divider()
@@ -55,11 +57,11 @@ struct WorkoutHistoryCard: View {
                         Circle()
                             .fill(AppColors.TextBlue.opacity(0.35))
                             .frame(width: 5, height: 5)
+                            .accessibilityHidden(true)
 
                         Text(exercise.name)
                             .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
                             .foregroundStyle(AppColors.TextWhite)
-
                     }
                 }
             }

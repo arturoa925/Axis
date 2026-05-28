@@ -55,6 +55,8 @@ struct RoutineEditor: View {
                                 .onLongPressGesture {
                                     exerciseToDelete = exercise
                                 }
+                                .accessibilityHint("Long press to remove")
+                                .accessibilityAction(named: "Remove") { exerciseToDelete = exercise }
                             }
                         }
 
@@ -136,6 +138,7 @@ struct RoutineEditor: View {
                         }
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Back")
 
                 Spacer()
             }
