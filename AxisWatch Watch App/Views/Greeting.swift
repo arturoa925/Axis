@@ -105,14 +105,14 @@ struct Greeting: View {
 
                 VStack(spacing: 3) {
                     Text("Small Actions.")
-                        .font(.system(size: 12))
+                        .font(.system(.caption))
                         .foregroundStyle(WatchColors.textBlue)
                         .opacity(showLine1 ? 1 : 0)
                         .offset(y: showLine1 ? 0 : 5)
                         .animation(.easeOut(duration: 0.8), value: showLine1)
 
                     Text("Repeated Daily.")
-                        .font(.system(size: 12))
+                        .font(.system(.caption))
                         .foregroundStyle(WatchColors.textBlue)
                         .opacity(showLine2 ? 1 : 0)
                         .offset(y: showLine2 ? 0 : 5)

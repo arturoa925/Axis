@@ -34,7 +34,7 @@ struct ExerciseCard: View {
                         }
                     } label: {
                         Image(systemName: "slider.horizontal.3")
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(.system(.body, weight: .semibold))
                             .foregroundStyle(AppColors.TextBlue)
                             .frame(width: 36, height: 36)
                             .background(expandedExerciseID == exercise.id ? AppColors.TextBlue.opacity(0.18) : .white.opacity(0.08))

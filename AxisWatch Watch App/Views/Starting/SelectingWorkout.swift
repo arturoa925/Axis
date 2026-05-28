@@ -23,7 +23,7 @@ struct SelectingWorkout: View {
 
                 Button(action: onStart) {
                     Text("Start")
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(.system(.title2, weight: .semibold))
                         .foregroundStyle(.white)
                         .frame(width: 100, height: 100)
                         .background(Circle().fill(Color(hex: "#315BFF")))
@@ -35,7 +35,7 @@ struct SelectingWorkout: View {
                 HStack {
                     Button(action: onCancel) {
                         Image(systemName: "xmark")
-                            .font(.system(size: 13, weight: .semibold))
+                            .font(.system(.caption, weight: .semibold))
                             .foregroundStyle(.white)
                             .frame(width: 36, height: 36)
                             .glassEffect(in: Circle())

@@ -71,7 +71,7 @@ struct CreateRoutine: View {
 
                             HStack(spacing: 10) {
                                 Image(systemName: "magnifyingglass")
-                                    .font(.system(size: 15, weight: .semibold))
+                                    .font(.system(.footnote, weight: .semibold))
                                     .foregroundStyle(.secondary)
                                     .accessibilityHidden(true)
 
@@ -137,7 +137,7 @@ struct CreateRoutine: View {
                                         } label: {
                                             HStack(spacing: 10) {
                                                 Image(systemName: isSelected ? "checkmark.circle.fill" : "plus.circle.fill")
-                                                    .font(.system(size: 18, weight: .semibold))
+                                                    .font(.system(.body, weight: .semibold))
                                                     .foregroundStyle(isSelected ? .green : AppColors.TextBlue)
                                                     .accessibilityHidden(true)
 
@@ -199,7 +199,7 @@ struct CreateRoutine: View {
                                                         .frame(width: 36, height: 36)
 
                                                     Image(systemName: "checkmark")
-                                                        .font(.system(size: 15, weight: .bold))
+                                                        .font(.system(.footnote, weight: .bold))
                                                         .foregroundStyle(AppColors.TextBlue)
                                                 }
                                                 .accessibilityHidden(true)
@@ -218,7 +218,7 @@ struct CreateRoutine: View {
                                                 Spacer()
 
                                                 Image(systemName: exercise.isExpanded ? "chevron.up.circle.fill" : "chevron.down.circle.fill")
-                                                    .font(.system(size: 22, weight: .semibold))
+                                                    .font(.system(.title2, weight: .semibold))
                                                     .foregroundStyle(.white.opacity(0.38))
                                                     .accessibilityHidden(true)
                                             }
@@ -333,7 +333,7 @@ struct CreateRoutine: View {
                     }
                 } label: {
                     Image(systemName: "minus")
-                        .font(.system(size: 13, weight: .bold))
+                        .font(.system(.caption, weight: .bold))
                         .frame(width: 28, height: 28)
                         .background(.white.opacity(0.10))
                         .clipShape(Circle())
@@ -355,7 +355,7 @@ struct CreateRoutine: View {
                     }
                 } label: {
                     Image(systemName: "plus")
-                        .font(.system(size: 13, weight: .bold))
+                        .font(.system(.caption, weight: .bold))
                         .frame(width: 28, height: 28)
                         .background(AppColors.TextBlue.opacity(0.18))
                         .clipShape(Circle())

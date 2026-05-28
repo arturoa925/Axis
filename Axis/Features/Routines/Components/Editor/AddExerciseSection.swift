@@ -52,7 +52,7 @@ struct AddExerciseSection: View {
 
             HStack(spacing: 10) {
                 Image(systemName: "magnifyingglass")
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.system(.footnote, weight: .semibold))
                     .foregroundStyle(.secondary)
                     .accessibilityHidden(true)
 
@@ -67,7 +67,7 @@ struct AddExerciseSection: View {
                     }
                 } label: {
                     Image(systemName: isAddPanelExpanded ? "chevron.down" : "chevron.up")
-                        .font(.system(size: 13, weight: .bold))
+                        .font(.system(.caption, weight: .bold))
                         .foregroundStyle(.white.opacity(0.78))
                         .frame(width: 28, height: 28)
                         .background(.white.opacity(0.10))
@@ -150,7 +150,7 @@ struct AddExerciseSection: View {
         } label: {
             HStack(spacing: 8) {
                 Image(systemName: isAlreadyAdded ? "checkmark.circle.fill" : "plus.circle.fill")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(.system(.footnote, weight: .semibold))
                     .foregroundStyle(isAlreadyAdded ? .green : AppColors.TextBlue)
 
                 Text(option.name)

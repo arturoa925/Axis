@@ -23,7 +23,7 @@ struct TargetControl: View {
                     }
                 } label: {
                     Image(systemName: "minus")
-                        .font(.system(size: 13, weight: .bold))
+                        .font(.system(.caption, weight: .bold))
                         .frame(width: 28, height: 28)
                         .background(.white.opacity(0.10))
                         .clipShape(Circle())
@@ -46,7 +46,7 @@ struct TargetControl: View {
                     }
                 } label: {
                     Image(systemName: "plus")
-                        .font(.system(size: 13, weight: .bold))
+                        .font(.system(.caption, weight: .bold))
                         .frame(width: 28, height: 28)
                         .background(AppColors.TextBlue.opacity(0.18))
                         .clipShape(Circle())

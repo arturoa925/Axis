@@ -36,7 +36,7 @@ struct RoutinesHome: View {
                             if routines.isEmpty {
                                 VStack(spacing: 10) {
                                     Image(systemName: "list.bullet.clipboard")
-                                        .font(.system(size: 34))
+                                        .font(.system(.largeTitle))
                                         .foregroundStyle(.white.opacity(0.8))
                                         .accessibilityHidden(true)
 
@@ -212,7 +212,7 @@ struct RoutinesHome: View {
             }
         } label: {
             Image(systemName: systemImage)
-                .font(.system(size: 18, weight: .semibold))
+                .font(.system(.body, weight: .semibold))
                 .frame(width: 52, height: 42)
             .foregroundStyle(selectedTab == tab ? AppColors.TextBlue : AppColors.TextBlue.opacity(0.62))
             .background {

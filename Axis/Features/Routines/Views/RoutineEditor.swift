@@ -127,7 +127,7 @@ struct RoutineEditor: View {
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
-                        .font(.system(size: 17, weight: .bold))
+                        .font(.system(.body, weight: .bold))
                         .foregroundStyle(.white)
                         .frame(width: 42, height: 42)
                         .background(.ultraThinMaterial)

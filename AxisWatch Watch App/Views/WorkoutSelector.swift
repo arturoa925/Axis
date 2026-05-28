@@ -11,7 +11,7 @@ struct WorkoutSelector: View {
                     .font(.custom("IstokWeb-Regular", size: 16, relativeTo: .headline))
                     .foregroundStyle(WatchColors.textBrown)
                 Text("Create routines\non your iPhone")
-                    .font(.system(size: 11))
+                    .font(.system(.caption2))
                     .foregroundStyle(WatchColors.textBrown.opacity(0.65))
                     .multilineTextAlignment(.center)
             }
@@ -48,7 +48,7 @@ private struct RoutineCard: View {
                     .multilineTextAlignment(.leading)
 
                 Text("\(template.exercises.count) exercises")
-                    .font(.system(size: 12))
+                    .font(.system(.caption))
                     .foregroundStyle(.white.opacity(0.85))
             }
             .frame(maxWidth: .infinity, alignment: .bottomLeading)

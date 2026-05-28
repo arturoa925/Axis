@@ -18,7 +18,7 @@ struct StartedWorkout: View {
                     // ── TOP: elapsed time + exercise name ──────────────────
                     VStack(spacing: 3) {
                         Text(elapsedText(context.date.timeIntervalSince(session.startedAt)))
-                            .font(.system(size: 24, weight: .medium, design: .monospaced))
+                            .font(.system(.title2, weight: .medium).monospacedDigit())
                             .foregroundStyle(WatchColors.textWhite)
 
                         Text(session.currentExercise?.name ?? "")
@@ -35,7 +35,7 @@ struct StartedWorkout: View {
                     HStack(spacing: 0) {
                         Button(action: { session.decrementRep() }) {
                             Image(systemName: "minus")
-                                .font(.system(size: 18, weight: .bold))
+                                .font(.system(.body, weight: .bold))
                                 .foregroundStyle(.white)
                                 .frame(width: 36, height: 36)
                                 .background(Circle().fill(Color(hex: "#315BFF")))
@@ -46,7 +46,7 @@ struct StartedWorkout: View {
                         Spacer()
 
                         Text("\(session.currentExercise?.currentReps ?? 0)")
-                            .font(.custom("NotoSans-Regular", size: 32))
+                            .font(.custom("NotoSans-Regular", size: 32, relativeTo: .largeTitle))
                             .foregroundStyle(.white)
                             .frame(width: 66, height: 66)
                             .background(Circle().fill(WatchColors.cardBackground))
@@ -56,7 +56,7 @@ struct StartedWorkout: View {
 
                         Button(action: { session.incrementRep() }) {
                             Image(systemName: "plus")
-                                .font(.system(size: 18, weight: .bold))
+                                .font(.system(.body, weight: .bold))
                                 .foregroundStyle(.white)
                                 .frame(width: 36, height: 36)
                                 .background(Circle().fill(Color(hex: "#315BFF")))
@@ -72,7 +72,7 @@ struct StartedWorkout: View {
                     HStack {
                         Button(action: { session.completeSet() }) {
                             Image(systemName: "plus")
-                                .font(.system(size: 15, weight: .semibold))
+                                .font(.system(.footnote, weight: .semibold))
                                 .foregroundStyle(.white)
                                 .frame(width: 40, height: 40)
                                 .glassEffect(in: Circle())
@@ -85,7 +85,7 @@ struct StartedWorkout: View {
                         if isOnFinalSet {
                             Button(action: { session.completeSet() }) {
                                 Image(systemName: "checkmark")
-                                    .font(.system(size: 18, weight: .semibold))
+                                    .font(.system(.body, weight: .semibold))
                                     .foregroundStyle(.white)
                                     .frame(width: 36, height: 36)
                                     .glassEffect(in: Circle())
@@ -94,7 +94,7 @@ struct StartedWorkout: View {
                             .accessibilityLabel("Complete workout")
                         } else if let exercise = session.currentExercise {
                             Text(exercise.setProgressText)
-                                .font(.system(size: 18, weight: .medium))
+                                .font(.system(.body, weight: .medium))
                                 .foregroundStyle(.white)
                         }
                     }

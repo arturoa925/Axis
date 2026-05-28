@@ -59,7 +59,7 @@ struct WatchConnectionStatusBlock: View {
 
         case .connected:
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 28, weight: .semibold))
+                .font(.system(.title, weight: .semibold))
                 .foregroundStyle(.blue)
                 .accessibilityLabel("Apple Watch connected")
 

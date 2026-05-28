@@ -19,7 +19,7 @@ struct WorkoutComplete: View {
                         .padding(.bottom, 10)
 
                     Text("Check your progress back on the app")
-                        .font(.custom("NotoSans-Regular", size: 14))
+                        .font(.custom("NotoSans-Regular", size: 14, relativeTo: .caption))
                         .foregroundStyle(WatchColors.textBrown)
                         .multilineTextAlignment(.center)
                         .lineLimit(3)
@@ -32,7 +32,7 @@ struct WorkoutComplete: View {
 
                 // ── MIDDLE: elapsed time ───────────────────────────────
                 Text(formattedDuration)
-                    .font(.system(size: 34, weight: .medium, design: .monospaced))
+                    .font(.system(.largeTitle, weight: .medium).monospacedDigit())
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .padding(.bottom, 6)
@@ -41,7 +41,7 @@ struct WorkoutComplete: View {
                 // ── BOTTOM: next button ────────────────────────────────
                 Button(action: onDismiss) {
                     Image(systemName: "arrow.right")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.system(.body, weight: .semibold))
                         .foregroundStyle(.white)
                         .frame(width: 40, height: 40)
                         .glassEffect(in: Circle())

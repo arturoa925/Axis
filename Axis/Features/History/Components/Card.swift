@@ -36,7 +36,7 @@ struct WorkoutHistoryCard: View {
 
             HStack(spacing: 6) {
                 Image(systemName: "clock")
-                    .font(.system(size: 12, weight: .medium))
+                    .font(.system(.caption2, weight: .medium))
                     .foregroundStyle(AppColors.TextBlue.opacity(0.7))
                     .accessibilityHidden(true)
 
