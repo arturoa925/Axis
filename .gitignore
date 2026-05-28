@@ -16,7 +16,8 @@ playground.xcworkspace
 
 # Misc
 *.log
-CLAUDE.MD
-Istok_web
+CLAUDE.md
+.claude
+Istok_Web
 Noto_Sans
 Axis.xcodeproj
