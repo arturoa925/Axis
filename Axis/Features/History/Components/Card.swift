@@ -20,6 +20,26 @@ struct WorkoutHistoryCard: View {
         return String(format: "%d:%02d", m, s)
     }
 
+    private var spokenDuration: String {
+        let total = Int(workout.elapsedTime)
+        let h = total / 3600
+        let m = (total % 3600) / 60
+        let s = total % 60
+        var parts: [String] = []
+        if h > 0 { parts.append("\(h) hour\(h == 1 ? "" : "s")") }
+        if m > 0 { parts.append("\(m) minute\(m == 1 ? "" : "s")") }
+        if s > 0 || parts.isEmpty { parts.append("\(s) second\(s == 1 ? "" : "s")") }
+        return parts.joined(separator: ", ")
+    }
+
+    private var accessibilityDescription: String {
+        let exerciseNames = workout.exercises
+            .sorted { $0.orderIndex < $1.orderIndex }
+            .map(\.name)
+            .joined(separator: ", ")
+        return "\(workout.templateName), \(formattedDate), \(spokenDuration), \(exerciseNames)"
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(alignment: .top) {
@@ -43,7 +63,6 @@ struct WorkoutHistoryCard: View {
                 Text(formattedDuration)
                     .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
                     .foregroundStyle(AppColors.TextBlue.opacity(0.7))
-                    .accessibilityLabel("Duration: \(formattedDuration)")
             }
 
             Divider()
@@ -73,6 +92,8 @@ struct WorkoutHistoryCard: View {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .stroke(AppColors.TextBlue.opacity(0.12), lineWidth: 1)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(accessibilityDescription)
     }
 }
 
