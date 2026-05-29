@@ -28,6 +28,7 @@ struct StartedWorkout: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.7)
                             .padding(.horizontal, 10)
+                            .accessibilityAddTraits(.isHeader)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .padding(.bottom, 14)
@@ -42,7 +43,7 @@ struct StartedWorkout: View {
                                 .background(Circle().fill(Color(hex: "#315BFF")))
                         }
                         .buttonStyle(.plain)
-                        .accessibilityLabel("Decrease reps")
+                        .accessibilityLabel("Decrease rep count")
 
                         Spacer()
 
@@ -63,7 +64,7 @@ struct StartedWorkout: View {
                                 .background(Circle().fill(Color(hex: "#315BFF")))
                         }
                         .buttonStyle(.plain)
-                        .accessibilityLabel("Increase reps")
+                        .accessibilityLabel("Increase rep count")
                     }
                     .padding(.horizontal, 16)
                     .padding(.bottom, 14)
@@ -80,6 +81,7 @@ struct StartedWorkout: View {
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel("Complete set")
+                        .accessibilityHint("Logs your reps and moves to the next set")
 
                         Spacer()
 
@@ -93,6 +95,7 @@ struct StartedWorkout: View {
                             }
                             .buttonStyle(.plain)
                             .accessibilityLabel("Complete workout")
+                            .accessibilityHint("Ends and saves your session")
                         } else if let exercise = session.currentExercise {
                             Text(exercise.setProgressText)
                                 .font(.system(.body, weight: .medium))

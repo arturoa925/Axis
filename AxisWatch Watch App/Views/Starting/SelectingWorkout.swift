@@ -18,6 +18,7 @@ struct SelectingWorkout: View {
                     .padding(.horizontal, 14)
                     .padding(.top, 8)
                     .padding(.bottom,10)
+                    .accessibilityAddTraits(.isHeader)
 
                 Spacer()
 
@@ -29,6 +30,8 @@ struct SelectingWorkout: View {
                         .background(Circle().fill(Color(hex: "#315BFF")))
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Start \(template.name)")
+                .accessibilityHint("Begins your workout")
 
                 Spacer()
 
