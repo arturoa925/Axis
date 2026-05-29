@@ -20,6 +20,7 @@ struct StartedWorkout: View {
                         Text(elapsedText(context.date.timeIntervalSince(session.startedAt)))
                             .font(.system(.title2, weight: .medium).monospacedDigit())
                             .foregroundStyle(WatchColors.textWhite)
+                            .accessibilityHidden(true)
 
                         Text(session.currentExercise?.name ?? "")
                             .font(.custom("IstokWeb-Regular", size: 22, relativeTo: .headline))

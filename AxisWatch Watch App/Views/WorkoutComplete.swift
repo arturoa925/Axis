@@ -36,7 +36,7 @@ struct WorkoutComplete: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .padding(.bottom, 6)
-                    .accessibilityLabel("Workout duration: \(formattedDuration)")
+                    .accessibilityLabel("Workout duration: \(spokenDuration)")
 
                 // ── BOTTOM: next button ────────────────────────────────
                 Button(action: onDismiss) {
@@ -63,6 +63,18 @@ struct WorkoutComplete: View {
             return String(format: "%d:%02d:%02d", h, m, s)
         }
         return String(format: "%02d:%02d", m, s)
+    }
+
+    private var spokenDuration: String {
+        let total = Int(max(0, payload.duration))
+        let h = total / 3600
+        let m = (total % 3600) / 60
+        let s = total % 60
+        var parts: [String] = []
+        if h > 0 { parts.append("\(h) hour\(h == 1 ? "" : "s")") }
+        if m > 0 { parts.append("\(m) minute\(m == 1 ? "" : "s")") }
+        if s > 0 || parts.isEmpty { parts.append("\(s) second\(s == 1 ? "" : "s")") }
+        return parts.joined(separator: ", ")
     }
 }
 
