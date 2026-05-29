@@ -71,7 +71,7 @@ struct RoutinesHome: View {
                                         }
                                         .accessibilityElement(children: .ignore)
                                         .accessibilityLabel("\(routine.name), \(routine.exercises.count) exercises")
-                                        .accessibilityHint("Double tap to open. Long press to delete.")
+                                        .accessibilityHint("Tap to open. Long press to delete.")
                                         .accessibilityAction(named: "Delete") { routineToDelete = routine }
                                     }
                                 }
@@ -154,7 +154,7 @@ struct RoutinesHome: View {
             .navigationDestination(item: $routineToEdit) { routine in
                 RoutineEditor(routine: routine)
             }
-            .alert("Delete routine?", isPresented: Binding(
+            .alert("Delete \"\(routineToDelete?.name ?? "routine")\"?", isPresented: Binding(
                 get: { routineToDelete != nil },
                 set: { if !$0 { routineToDelete = nil } }
             )) {
@@ -238,6 +238,7 @@ private enum RoutineHomeTab {
 
 #Preview {
     RoutinesHome()
+        .environmentObject(PhoneConnectivityManager())
         .modelContainer(for: [
             Exercise.self,
             TemplateExercise.self,

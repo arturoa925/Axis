@@ -35,6 +35,7 @@ struct ExerciseCard: View {
                     Text("\(exercise.targetSets) × \(exercise.targetReps)")
                         .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
                         .foregroundStyle(.white.opacity(0.9))
+                        .accessibilityLabel("\(exercise.targetSets) sets, \(exercise.targetReps) reps")
                 }
             }
 
@@ -76,6 +77,7 @@ struct ExerciseCard: View {
                 .stroke(.white.opacity(0.10), lineWidth: 1)
         }
         .animation(.smooth(duration: 0.28), value: expandedExerciseID)
+        .accessibilityAddTraits(.isButton)
         .accessibilityHint(expandedExerciseID == exercise.id ? "Tap to collapse targets" : "Tap to adjust targets")
     }
 }

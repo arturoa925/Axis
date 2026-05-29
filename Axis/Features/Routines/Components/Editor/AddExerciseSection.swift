@@ -182,6 +182,7 @@ struct AddExerciseSection: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(isAlreadyAdded ? "Remove \(option.name) from routine" : "Add \(option.name) to routine")
+        .accessibilityAddTraits(isAlreadyAdded ? .isSelected : [])
     }
 
     // save button component
