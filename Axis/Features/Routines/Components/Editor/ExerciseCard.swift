@@ -27,25 +27,10 @@ struct ExerciseCard: View {
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 8) {
-                    // button to expand
-                    Button {
-                        withAnimation(.smooth(duration: 0.28)) {
-                            expandedExerciseID = expandedExerciseID == exercise.id ? nil : exercise.id
-                        }
-                    } label: {
-                        Image(systemName: "slider.horizontal.3")
-                            .font(.system(.body, weight: .semibold))
-                            .foregroundStyle(AppColors.TextBlue)
-                            .frame(width: 36, height: 36)
-                            .background(expandedExerciseID == exercise.id ? AppColors.TextBlue.opacity(0.18) : .white.opacity(0.08))
-                            .clipShape(Circle())
-                            .overlay {
-                                Circle()
-                                    .stroke(expandedExerciseID == exercise.id ? AppColors.TextBlue.opacity(0.32) : .white.opacity(0.08), lineWidth: 1)
-                            }
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel(expandedExerciseID == exercise.id ? "Collapse targets for \(exercise.exercise.name)" : "Expand targets for \(exercise.exercise.name)")
+                    Image(systemName: expandedExerciseID == exercise.id ? "chevron.up.circle.fill" : "chevron.down.circle.fill")
+                        .font(.system(.title2, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.38))
+                        .accessibilityHidden(true)
 
                     Text("\(exercise.targetSets) × \(exercise.targetReps)")
                         .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
@@ -77,6 +62,12 @@ struct ExerciseCard: View {
                 .transition(.opacity.combined(with: .scale(scale: 0.98, anchor: .top)))
             }
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            withAnimation(.smooth(duration: 0.28)) {
+                expandedExerciseID = expandedExerciseID == exercise.id ? nil : exercise.id
+            }
+        }
         .padding(14)
         .background(.thinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
@@ -85,6 +76,7 @@ struct ExerciseCard: View {
                 .stroke(.white.opacity(0.10), lineWidth: 1)
         }
         .animation(.smooth(duration: 0.28), value: expandedExerciseID)
+        .accessibilityHint(expandedExerciseID == exercise.id ? "Tap to collapse targets" : "Tap to adjust targets")
     }
 }
 #Preview {

@@ -230,13 +230,13 @@ struct CreateRoutine: View {
                                         if exercise.isExpanded {
                                             VStack(spacing: 12) {
                                                 HStack(spacing: 12) {
-                                                    targetControl(
+                                                    TargetControl(
                                                         title: "Sets",
                                                         value: $exercise.targetSets,
                                                         range: 1...10
                                                     )
 
-                                                    targetControl(
+                                                    TargetControl(
                                                         title: "Reps",
                                                         value: $exercise.targetReps,
                                                         range: 1...50
@@ -314,78 +314,6 @@ struct CreateRoutine: View {
                     }
                     .accessibilityLabel("Cancel")
                 }
-            }
-        }
-    }
-
-    // controls & sets the number of reps and sets
-    private func targetControl(title: String, value: Binding<Int>, range: ClosedRange<Int>) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(title)
-                .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                .foregroundStyle(.white.opacity(0.9))
-
-            HStack(spacing: 12) {
-                Button {
-                    guard value.wrappedValue > range.lowerBound else { return }
-                    withAnimation(.smooth(duration: 0.18)) {
-                        value.wrappedValue -= 1
-                    }
-                } label: {
-                    Image(systemName: "minus")
-                        .font(.system(.caption, weight: .bold))
-                        .frame(width: 28, height: 28)
-                        .background(.white.opacity(0.10))
-                        .clipShape(Circle())
-                }
-                .buttonStyle(.plain)
-                .foregroundStyle(.white.opacity(value.wrappedValue > range.lowerBound ? 0.86 : 0.28))
-                .disabled(value.wrappedValue <= range.lowerBound)
-
-                Text("\(value.wrappedValue)")
-                    .font(.custom("NotoSans-Regular", size: 22, relativeTo: .title3))
-                    .foregroundStyle(.white)
-                    .frame(minWidth: 28)
-                    .contentTransition(.numericText())
-
-                Button {
-                    guard value.wrappedValue < range.upperBound else { return }
-                    withAnimation(.smooth(duration: 0.18)) {
-                        value.wrappedValue += 1
-                    }
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.system(.caption, weight: .bold))
-                        .frame(width: 28, height: 28)
-                        .background(AppColors.TextBlue.opacity(0.18))
-                        .clipShape(Circle())
-                }
-                .buttonStyle(.plain)
-                .foregroundStyle(AppColors.TextBlue)
-                .disabled(value.wrappedValue >= range.upperBound)
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .padding(12)
-        .background(.white.opacity(0.07))
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .stroke(.white.opacity(0.08), lineWidth: 1)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(title)
-        .accessibilityValue("\(value.wrappedValue)")
-        .accessibilityAdjustableAction { direction in
-            switch direction {
-            case .increment:
-                guard value.wrappedValue < range.upperBound else { return }
-                withAnimation(.smooth(duration: 0.18)) { value.wrappedValue += 1 }
-            case .decrement:
-                guard value.wrappedValue > range.lowerBound else { return }
-                withAnimation(.smooth(duration: 0.18)) { value.wrappedValue -= 1 }
-            @unknown default:
-                break
             }
         }
     }
