@@ -29,6 +29,9 @@ struct WorkoutComplete: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding(.top, 10)
                 .padding(.bottom, 10)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Session Complete. Check your progress back on the app. Workout duration: \(spokenDuration).")
+                .accessibilityAddTraits(.isHeader)
 
                 // ── MIDDLE: elapsed time ───────────────────────────────
                 Text(formattedDuration)
@@ -36,7 +39,7 @@ struct WorkoutComplete: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .padding(.bottom, 6)
-                    .accessibilityLabel("Workout duration: \(spokenDuration)")
+                    .accessibilityHidden(true)
 
                 // ── BOTTOM: next button ────────────────────────────────
                 Button(action: onDismiss) {
@@ -48,6 +51,7 @@ struct WorkoutComplete: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Done")
+                .accessibilityHint("Returns to your routine list")
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 .padding(.bottom, 10)
             }
