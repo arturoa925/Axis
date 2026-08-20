@@ -3,10 +3,7 @@
 import SwiftUI
 
 struct QuoteBlock: View {
-    // give each line a var
-    @State private var showWelcome = false
-    @State private var showFirstLine = false
-    @State private var showSecondLine = false
+    @State private var animate = false
 
     var body: some View {
         ZStack {
@@ -17,40 +14,33 @@ struct QuoteBlock: View {
                 Text("Welcome")
                     .font(AppTypography.title)
                     .foregroundStyle(AppColors.TextBlue)
-                    .opacity(showWelcome ? 1 : 0)
-                    .offset(y: showWelcome ? 0 : 10)
+                    .opacity(animate ? 1 : 0)
+                    .scaleEffect(animate ? 1 : 0.92)
+                    .offset(y: animate ? 0 : 10)
+                    .animation(.spring(response: 0.5, dampingFraction: 0.78), value: animate)
 
                 VStack(spacing: 6) {
                     Text("Small Actions.")
                         .font(AppTypography.body)
                         .foregroundStyle(AppColors.TextBlue)
-                        .opacity(showFirstLine ? 1 : 0)
-                        .offset(y: showFirstLine ? 0 : 12)
+                        .opacity(animate ? 1 : 0)
+                        .offset(y: animate ? 0 : 12)
+                        .animation(.spring(response: 0.5, dampingFraction: 0.8).delay(0.15), value: animate)
 
                     Text("Repeated Daily.")
                         .font(AppTypography.body)
                         .foregroundStyle(AppColors.TextBlue)
-                        .opacity(showSecondLine ? 1 : 0)
-                        .offset(y: showSecondLine ? 0 : 12)
+                        .opacity(animate ? 1 : 0)
+                        .offset(y: animate ? 0 : 12)
+                        .animation(.spring(response: 0.5, dampingFraction: 0.8).delay(0.3), value: animate)
                 }
             }
             .multilineTextAlignment(.center)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Welcome. Small Actions. Repeated Daily.")
         }
-        // text sequence
         .onAppear {
-            withAnimation(.easeOut(duration: 0.7)) {
-                showWelcome = true
-            }
-
-            withAnimation(.easeOut(duration: 0.8).delay(0.35)) {
-                showFirstLine = true
-            }
-
-            withAnimation(.easeOut(duration: 0.8).delay(0.65)) {
-                showSecondLine = true
-            }
+            animate = true
         }
     }
 }

@@ -145,15 +145,23 @@ struct LaunchAnimation: View {
                 LaunchSparkles(drift: drift)
 
                 VStack(spacing: 18) {
-                    Text("Axis")
-//                        .font(AppTypography.title)
-                        .font(.custom("IstokWeb-Regular", size: 36, relativeTo: .title))
-                        .foregroundStyle(Color(hex: "#774B1C"))
-                        .tracking(1.2)
-                        .opacity(animate ? 1 : 0.7)
-                        .scaleEffect(animate ? 1 : 0.96)
-                        .shadow(color: Color(hex: "#F0F0F0").opacity(0.45), radius: 10, x: 0, y: 0)
-                        .animation(.easeOut(duration: 1.15), value: animate)
+                    HStack(spacing: 2) {
+                        ForEach(Array("Axis".enumerated()), id: \.offset) { index, letter in
+                            Text(String(letter))
+                                .font(.custom("IstokWeb-Regular", size: 36, relativeTo: .title))
+                                .foregroundStyle(Color(hex: "#774B1C"))
+                                .tracking(1.2)
+                                .opacity(animate ? 1 : 0)
+                                .scaleEffect(animate ? 1 : 0.4)
+                                .offset(y: animate ? 0 : 14)
+                                .shadow(color: Color(hex: "#F0F0F0").opacity(0.45), radius: 10, x: 0, y: 0)
+                                .animation(
+                                    .spring(response: 0.55, dampingFraction: 0.62)
+                                        .delay(Double(index) * 0.09),
+                                    value: animate
+                                )
+                        }
+                    }
                 }
             }
             .compositingGroup()
