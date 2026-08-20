@@ -195,7 +195,7 @@ struct AddExerciseSection: View {
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 15)
-                .background(AppColors.TextBlue)
+                .background(AppColors.actionBlue)
                 .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
         .buttonStyle(.plain)

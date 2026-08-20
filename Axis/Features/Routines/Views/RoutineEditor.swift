@@ -59,11 +59,10 @@ struct RoutineEditor: View {
                                 .accessibilityAction(named: "Remove") { exerciseToDelete = exercise }
                             }
                         }
-
-                        Spacer(minLength: 220)
                     }
                     .padding(.top, 12)
                 }
+                .safeAreaPadding(.bottom, addPanelHeight + 74)
             }
 
             // bottom section to add additional exercises
@@ -82,7 +81,7 @@ struct RoutineEditor: View {
                 .offset(y: max(0, addPanelDragOffset))
             }
             .padding(.horizontal, 18)
-            .padding(.bottom, 34)
+            .padding(.bottom, 54)
             .background(alignment: .bottom) {
                 LinearGradient(
                     colors: [
