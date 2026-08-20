@@ -11,6 +11,7 @@ import SwiftData
 struct RoutinesHome: View {
     @Query(sort: \WorkoutTemplate.createdAt, order: .reverse) private var routines: [WorkoutTemplate]
     @State private var isShowingCreateRoutine = false
+    @State private var createButtonSpin: Double = 0
     @State private var selectedTab: RoutineHomeTab = .routines
     // list of created routines
     @State private var routineToEdit: WorkoutTemplate?
@@ -92,20 +93,32 @@ struct RoutinesHome: View {
                     VStack(spacing: 14) {
                         if selectedTab == .routines {
                             Button {
+                                withAnimation(.spring(response: 0.45, dampingFraction: 0.6)) {
+                                    createButtonSpin += 360
+                                }
                                 isShowingCreateRoutine = true
                             } label: {
                                 HStack(spacing: 8) {
                                     Image(systemName: "plus.circle.fill")
+                                        .rotationEffect(.degrees(createButtonSpin))
                                     Text("Create Routine")
                                 }
-                                .font(.headline)
+                                .font(.custom("NotoSans-Regular", size: 18, relativeTo: .headline))
+                                .fontWeight(.semibold)
+                                .foregroundStyle(AppColors.TextWhite)
                                 .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(.vertical, 2)
+                                .padding(.vertical, 14)
+                                .background(
+                                    LinearGradient(
+                                        colors: [AppColors.actionBlue, AppColors.actionBlue.opacity(0.85)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .clipShape(Capsule())
+                                .shadow(color: AppColors.actionBlue.opacity(0.55), radius: 18, x: 0, y: 8)
                             }
-                            .buttonStyle(.borderedProminent)
-                            .controlSize(.large)
-                            .buttonBorderShape(.capsule)
-                            .tint(.blue)
+                            .buttonStyle(LivelyButtonStyle())
                             .padding(.horizontal, 24)
                         }
 
@@ -234,6 +247,14 @@ struct RoutinesHome: View {
 private enum RoutineHomeTab {
     case routines
     case history
+}
+
+private struct LivelyButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.94 : 1)
+            .animation(.spring(response: 0.35, dampingFraction: 0.55), value: configuration.isPressed)
+    }
 }
 
 #Preview {

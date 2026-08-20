@@ -15,6 +15,10 @@ struct AppColors {
     static let TextWhite = Color(hex: "#FFFFFF")
     static let TextBlack = Color(hex: "#000000")
 
+    // Actions
+    // vivid, saturated blue for primary CTAs — meant to pop, not blend in
+    static let actionBlue = Color(hex: "#3D6BFF")
+
     //Status
     static let success = Color.blue
     static let warning = Color.orange
