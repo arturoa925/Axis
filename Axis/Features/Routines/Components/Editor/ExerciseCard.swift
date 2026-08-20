@@ -70,12 +70,13 @@ struct ExerciseCard: View {
             }
         }
         .padding(14)
-        .background(.thinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         .overlay {
-            RoundedRectangle(cornerRadius: 26, style: .continuous)
-                .stroke(.white.opacity(0.10), lineWidth: 1)
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(.white.opacity(0.22), lineWidth: 1)
         }
+        .shadow(color: .black.opacity(0.10), radius: 14, x: 0, y: 6)
         .animation(.smooth(duration: 0.28), value: expandedExerciseID)
         .accessibilityAddTraits(.isButton)
         .accessibilityHint(expandedExerciseID == exercise.id ? "Tap to collapse targets" : "Tap to adjust targets")

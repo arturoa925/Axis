@@ -82,11 +82,11 @@ struct CreateRoutine: View {
                             }
                             .padding(.horizontal, 14)
                             .padding(.vertical, 12)
-                            .background(.ultraThinMaterial)
+                            .background(.regularMaterial)
                             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                             .overlay {
                                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                    .stroke(.white.opacity(0.12), lineWidth: 1)
+                                    .stroke(.white.opacity(0.18), lineWidth: 1)
                             }
 
                             // equipment categories
@@ -100,14 +100,20 @@ struct CreateRoutine: View {
                                         } label: {
                                             Text(equipment.title)
                                                 .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
-                                                .foregroundStyle(selectedEquipment == equipment ? AppColors.background : .white.opacity(0.82))
+                                                .foregroundStyle(AppColors.TextBrown)
                                                 .padding(.horizontal, 13)
                                                 .padding(.vertical, 8)
-                                                .background(selectedEquipment == equipment ? Color.white : Color.white.opacity(0.08))
+                                                .background {
+                                                    if selectedEquipment == equipment {
+                                                        Capsule().fill(Color.white)
+                                                    } else {
+                                                        Capsule().fill(.thinMaterial)
+                                                    }
+                                                }
                                                 .clipShape(Capsule())
                                                 .overlay {
                                                     Capsule()
-                                                        .stroke(.white.opacity(selectedEquipment == equipment ? 0 : 0.12), lineWidth: 1)
+                                                        .stroke(.white.opacity(selectedEquipment == equipment ? 0 : 0.18), lineWidth: 1)
                                                 }
                                         }
                                         .buttonStyle(.plain)
@@ -143,7 +149,7 @@ struct CreateRoutine: View {
 
                                                 Text(exercise.name)
                                                     .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
-                                                    .foregroundStyle(.white)
+                                                    .foregroundStyle(AppColors.TextBrown)
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.82)
 
@@ -152,11 +158,11 @@ struct CreateRoutine: View {
                                             .padding(.horizontal, 12)
                                             .padding(.vertical, 12)
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                            .background(.thinMaterial)
+                                            .background(.regularMaterial)
                                             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                                             .overlay {
                                                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                                    .stroke(.white.opacity(0.10), lineWidth: 1)
+                                                    .stroke(.white.opacity(0.16), lineWidth: 1)
                                             }
                                         }
                                         .buttonStyle(.plain)
@@ -264,12 +270,13 @@ struct CreateRoutine: View {
                                         }
                                     }
                                     .padding(14)
-                                    .background(.thinMaterial)
-                                    .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+                                    .background(.ultraThinMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                                     .overlay {
-                                        RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                            .stroke(.white.opacity(0.10), lineWidth: 1)
+                                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                            .stroke(.white.opacity(0.22), lineWidth: 1)
                                     }
+                                    .shadow(color: .black.opacity(0.10), radius: 14, x: 0, y: 6)
                                     .animation(.smooth(duration: 0.28), value: exercise.isExpanded)
                                 }
                             }
@@ -278,24 +285,7 @@ struct CreateRoutine: View {
                             .listRowBackground(Color.clear)
                         }
                         Section {
-                            Button {
-                                saveRoutine()
-                            } label: {
-                                // create / save routine btn
-                                HStack(spacing: 8) {
-                                    Image(systemName: "plus.circle.fill")
-                                    Text("Create Routine")
-                                }
-                                .font(.headline)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(.vertical, 2)
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .controlSize(.large)
-                            .buttonBorderShape(.capsule)
-                            .tint(.blue)
-                            .disabled(!canSaveRoutine)
-                            .listRowBackground(Color.clear)
+                            createRoutineButton
                         }
                     }
                 }
@@ -316,6 +306,45 @@ struct CreateRoutine: View {
                 }
             }
         }
+    }
+
+    private var createRoutineButton: some View {
+        Button {
+            saveRoutine()
+        } label: {
+            createRoutineLabel
+        }
+        .buttonStyle(LivelyButtonStyle())
+        .disabled(!canSaveRoutine)
+        .listRowInsets(EdgeInsets(top: 20, leading: 32, bottom: 20, trailing: 32))
+        .listRowBackground(Color.clear)
+    }
+
+    private var createRoutineLabel: some View {
+        let shadowOpacity: Double = canSaveRoutine ? 0.4 : 0
+        let contentOpacity: Double = canSaveRoutine ? 1 : 0.45
+
+        return HStack(spacing: 8) {
+            Image(systemName: "plus.circle.fill")
+            Text("Create Routine")
+        }
+        .font(.custom("NotoSans-Regular", size: 18, relativeTo: .headline))
+        .fontWeight(.semibold)
+        .foregroundStyle(.white)
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.vertical, 14)
+        .background(createRoutineGradient)
+        .clipShape(Capsule())
+        .opacity(contentOpacity)
+        .shadow(color: AppColors.actionBlue.opacity(shadowOpacity), radius: 12, x: 0, y: 4)
+    }
+
+    private var createRoutineGradient: LinearGradient {
+        LinearGradient(
+            colors: [AppColors.actionBlue, AppColors.actionBlue.opacity(0.85)],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
     }
 
     private func toggleExerciseSelection(_ exercise: ExerciseOption) {

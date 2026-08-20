@@ -50,20 +50,33 @@ struct RoutinesHome: View {
                             } else {
                                 LazyVStack(spacing: 12) {
                                     ForEach(routines) { routine in
-                                        VStack(alignment: .leading, spacing: 6) {
-                                            Text(routine.name)
-                                                .font(.custom("IstokWeb-Regular", size: 22, relativeTo: .title3))
-                                                .foregroundStyle(AppColors.TextBlue)
+                                        HStack(spacing: 14) {
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                Text(routine.name)
+                                                    .font(.custom("IstokWeb-Regular", size: 20, relativeTo: .title3))
+                                                    .foregroundStyle(.white)
+                                                    .lineLimit(1)
 
-                                            Text("\(routine.exercises.count) exercises")
-                                                .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
-                                                .foregroundStyle(AppColors.TextBlue.opacity(0.72))
+                                                Text("\(routine.exercises.count) exercises")
+                                                    .font(.custom("NotoSans-Regular", size: 13, relativeTo: .body))
+                                                    .foregroundStyle(.white.opacity(0.65))
+                                            }
+
+                                            Spacer(minLength: 8)
+
+                                            Image(systemName: "chevron.right")
+                                                .font(.system(size: 13, weight: .semibold))
+                                                .foregroundStyle(.white.opacity(0.4))
                                         }
-                                        .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(16)
-                                        .background(AppColors.cardBackground.opacity(0.95))
-                                        .clipShape(RoundedRectangle(cornerRadius: 18))
-                                        .contentShape(RoundedRectangle(cornerRadius: 18))
+                                        .background(.ultraThinMaterial)
+                                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                                        .overlay {
+                                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                                .stroke(.white.opacity(0.22), lineWidth: 1)
+                                        }
+                                        .shadow(color: .black.opacity(0.10), radius: 14, x: 0, y: 6)
+                                        .contentShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                                         .onTapGesture {
                                             routineToEdit = routine
                                         }
@@ -247,14 +260,6 @@ struct RoutinesHome: View {
 private enum RoutineHomeTab {
     case routines
     case history
-}
-
-private struct LivelyButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.94 : 1)
-            .animation(.spring(response: 0.35, dampingFraction: 0.55), value: configuration.isPressed)
-    }
 }
 
 #Preview {

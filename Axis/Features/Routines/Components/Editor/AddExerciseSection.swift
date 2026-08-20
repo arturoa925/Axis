@@ -79,11 +79,11 @@ struct AddExerciseSection: View {
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
-            .background(.ultraThinMaterial)
+            .background(.regularMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
             .overlay {
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(.white.opacity(0.12), lineWidth: 1)
+                    .stroke(.white.opacity(0.18), lineWidth: 1)
             }
 
             // applicable when capsule is not expanded
@@ -97,11 +97,21 @@ struct AddExerciseSection: View {
                         } label: {
                             Text(equipment.title)
                                 .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                                .foregroundStyle(selectedEquipment == equipment ? AppColors.background : .white.opacity(0.82))
+                                .foregroundStyle(AppColors.TextBrown)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 7)
-                                .background(selectedEquipment == equipment ? Color.white : Color.white.opacity(0.08))
+                                .background {
+                                    if selectedEquipment == equipment {
+                                        Capsule().fill(Color.white)
+                                    } else {
+                                        Capsule().fill(.thinMaterial)
+                                    }
+                                }
                                 .clipShape(Capsule())
+                                .overlay {
+                                    Capsule()
+                                        .stroke(.white.opacity(selectedEquipment == equipment ? 0 : 0.18), lineWidth: 1)
+                                }
                         }
                         .buttonStyle(.plain)
                         .accessibilityAddTraits(selectedEquipment == equipment ? .isSelected : [])
@@ -138,8 +148,9 @@ struct AddExerciseSection: View {
         .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .stroke(.white.opacity(0.12), lineWidth: 1)
+                .stroke(.white.opacity(0.22), lineWidth: 1)
         }
+        .shadow(color: .black.opacity(0.10), radius: 14, x: 0, y: 6)
     }
 
     private func addExerciseChip(_ option: ExerciseOption) -> some View {
@@ -173,11 +184,17 @@ struct AddExerciseSection: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
             .frame(maxWidth: isAddPanelExpanded ? .infinity : nil, alignment: .leading)
-            .background(isAlreadyAdded ? Color.white : Color.white.opacity(0.08))
+            .background {
+                if isAlreadyAdded {
+                    Capsule().fill(Color.white)
+                } else {
+                    Capsule().fill(.regularMaterial)
+                }
+            }
             .clipShape(Capsule())
             .overlay {
                 Capsule()
-                    .stroke(isAlreadyAdded ? Color.clear : .white.opacity(0.10), lineWidth: 1)
+                    .stroke(isAlreadyAdded ? Color.clear : .white.opacity(0.18), lineWidth: 1)
             }
         }
         .buttonStyle(.plain)
@@ -197,8 +214,9 @@ struct AddExerciseSection: View {
                 .padding(.vertical, 15)
                 .background(AppColors.actionBlue)
                 .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .shadow(color: AppColors.actionBlue.opacity(0.5), radius: 16, x: 0, y: 8)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(LivelyButtonStyle())
     }
 
     private func toggleExercise(_ option: ExerciseOption) {
