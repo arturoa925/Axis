@@ -10,6 +10,7 @@ import Foundation
 enum EquipmentType: String, CaseIterable, Identifiable {
    case barbell
    case dumbbell
+   case kettlebell
    case cable
    case bodyweight
    case machine
@@ -22,6 +23,8 @@ enum EquipmentType: String, CaseIterable, Identifiable {
            return "Barbell"
        case .dumbbell:
            return "Dumbbell"
+       case .kettlebell:
+           return "Kettlebell"
        case .cable:
            return "Cable"
        case .bodyweight:
