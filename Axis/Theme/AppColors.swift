@@ -3,20 +3,31 @@ import SwiftUI
 
 struct AppColors {
 
+    private static var isDarkMode: Bool { ThemeManager.shared.isDarkMode }
+
     //Backgrounds
-    static let background = Color(hex: "#D8CFC4")
-    // light blue
-    static let cardBackground = Color(hex: "#D0DAFF")
+    static var background: Color {
+        isDarkMode ? Color(hex: "#17181C") : Color(hex: "#D8CFC4")
+    }
+    // light blue (dark: desaturated navy)
+    static var cardBackground: Color {
+        isDarkMode ? Color(hex: "#262B3D") : Color(hex: "#D0DAFF")
+    }
 
     // Text
-    // navy
-    static let TextBlue = Color(hex: "#5B7AC5")
-    static let TextBrown = Color(hex: "#774B1C")
+    // navy (dark: lightened for contrast against a dark background)
+    static var TextBlue: Color {
+        isDarkMode ? Color(hex: "#93ACEE") : Color(hex: "#5B7AC5")
+    }
+    // brown (dark: warm cream, since dark brown vanishes on a dark background)
+    static var TextBrown: Color {
+        isDarkMode ? Color(hex: "#E9D3AC") : Color(hex: "#774B1C")
+    }
     static let TextWhite = Color(hex: "#FFFFFF")
     static let TextBlack = Color(hex: "#000000")
 
     // Actions
-    // vivid, saturated blue for primary CTAs — meant to pop, not blend in
+    // vivid, saturated blue for primary CTAs — meant to pop, not blend in. Stays the same in both modes.
     static let actionBlue = Color(hex: "#3D6BFF")
 
     //Status

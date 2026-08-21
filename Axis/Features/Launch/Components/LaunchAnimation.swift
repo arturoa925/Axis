@@ -4,15 +4,18 @@ import SwiftUI
 struct LaunchAnimation: View {
     @State private var animate = false
     @State private var drift = false
+    @ObservedObject private var themeManager = ThemeManager.shared
+
+    private var backgroundGradientColors: [Color] {
+        themeManager.isDarkMode
+            ? [Color(hex: "#101114"), Color(hex: "#17181C"), Color(hex: "#1B1E2B")]
+            : [Color(hex: "#E7DED4"), Color(hex: "#D8CFC4"), Color(hex: "#F3ECE4")]
+    }
 
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [
-                    Color(hex: "#E7DED4"),
-                    Color(hex: "#D8CFC4"),
-                    Color(hex: "#F3ECE4")
-                ],
+                colors: backgroundGradientColors,
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -149,7 +152,7 @@ struct LaunchAnimation: View {
                         ForEach(Array("Axis".enumerated()), id: \.offset) { index, letter in
                             Text(String(letter))
                                 .font(.custom("IstokWeb-Regular", size: 36, relativeTo: .title))
-                                .foregroundStyle(Color(hex: "#774B1C"))
+                                .foregroundStyle(AppColors.TextBrown)
                                 .tracking(1.2)
                                 .opacity(animate ? 1 : 0)
                                 .scaleEffect(animate ? 1 : 0.4)

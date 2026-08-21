@@ -3,6 +3,8 @@ import SwiftUI
 struct RootView: View {
     // brings app state
     @EnvironmentObject var appState: AppState
+    @ObservedObject private var themeManager = ThemeManager.shared
+    @Environment(\.scenePhase) private var scenePhase
     @State private var onboardingStep: OnboardingStep = .launch
 
     // 4 step sequence
@@ -12,7 +14,7 @@ struct RootView: View {
             AppColors.background
                 .ignoresSafeArea()
 
-            
+
                 switch onboardingStep {
                 case .launch:
                     LaunchView()
@@ -30,11 +32,19 @@ struct RootView: View {
                     MainTabView()
                         .transition(.opacity)
                 }
-            
+
         }
+        // forces the subtree to rebuild when day/night flips, so every
+        // static AppColors lookup re-evaluates against the new theme
+        .id(themeManager.isDarkMode)
         .animation(.easeInOut(duration: 0.6), value: onboardingStep)
         .onAppear {
             startOnboardingSequence()
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                themeManager.refresh()
+            }
         }
     }
 
