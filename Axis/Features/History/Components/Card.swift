@@ -45,28 +45,28 @@ struct WorkoutHistoryCard: View {
             HStack(alignment: .top) {
                 Text(workout.templateName)
                     .font(.custom("IstokWeb-Regular", size: 20, relativeTo: .title3))
-                    .foregroundStyle(AppColors.TextBlue)
+                    .foregroundStyle(.white)
 
                 Spacer()
 
                 Text(formattedDate)
                     .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                    .foregroundStyle(AppColors.TextBlue.opacity(0.6))
+                    .foregroundStyle(.white.opacity(0.6))
             }
 
             HStack(spacing: 6) {
                 Image(systemName: "clock")
                     .font(.system(.caption2, weight: .medium))
-                    .foregroundStyle(AppColors.TextBlue.opacity(0.7))
+                    .foregroundStyle(AppColors.actionBlue)
                     .accessibilityHidden(true)
 
                 Text(formattedDuration)
                     .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                    .foregroundStyle(AppColors.TextBlue.opacity(0.7))
+                    .foregroundStyle(.white.opacity(0.75))
             }
 
             Divider()
-                .overlay(AppColors.TextBlue.opacity(0.15))
+                .overlay(.white.opacity(0.16))
 
             // exercises placed in proper order
             let sorted = workout.exercises.sorted { $0.orderIndex < $1.orderIndex }
@@ -74,24 +74,25 @@ struct WorkoutHistoryCard: View {
                 ForEach(sorted, id: \.id) { exercise in
                     HStack(spacing: 8) {
                         Circle()
-                            .fill(AppColors.TextBlue.opacity(0.35))
+                            .fill(AppColors.actionBlue.opacity(0.7))
                             .frame(width: 5, height: 5)
                             .accessibilityHidden(true)
 
                         Text(exercise.name)
                             .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
-                            .foregroundStyle(AppColors.TextWhite)
+                            .foregroundStyle(.white.opacity(0.85))
                     }
                 }
             }
         }
         .padding(18)
-        .background(AppColors.cardBackground)
+        .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(AppColors.TextBlue.opacity(0.12), lineWidth: 1)
+                .stroke(.white.opacity(0.22), lineWidth: 1)
         }
+        .shadow(color: .black.opacity(0.10), radius: 14, x: 0, y: 6)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityDescription)
     }
@@ -109,6 +110,10 @@ struct WorkoutHistoryCard: View {
         exercises: [exercise1, exercise2, exercise3]
     )
 
-    WorkoutHistoryCard(workout: workout)
-        .padding()
+    ZStack {
+        Color.black.ignoresSafeArea()
+
+        WorkoutHistoryCard(workout: workout)
+            .padding()
+    }
 }

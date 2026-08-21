@@ -28,6 +28,12 @@ struct HistoryView: View {
                         VStack(spacing: 14) {
                             ForEach(workouts, id: \.id) { workout in
                                 WorkoutHistoryCard(workout: workout)
+                                    .scrollTransition { content, phase in
+                                        content
+                                            .opacity(phase.isIdentity ? 1 : 0)
+                                            .scaleEffect(phase.isIdentity ? 1 : 0.92)
+                                            .offset(y: phase.isIdentity ? 0 : 24)
+                                    }
                             }
                         }
                         .padding(.horizontal, 20)
