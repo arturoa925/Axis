@@ -166,7 +166,7 @@ struct AddExerciseSection: View {
 
                 Text(option.name)
                     .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
-                    .foregroundStyle(isAlreadyAdded ? AppColors.background : .white)
+                    .foregroundStyle(isAlreadyAdded ? AppColors.background : AppColors.TextBrown)
                     .lineLimit(1)
                     .minimumScaleFactor(0.82)
 
