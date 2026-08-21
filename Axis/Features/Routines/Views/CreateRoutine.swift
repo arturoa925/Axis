@@ -100,7 +100,8 @@ struct CreateRoutine: View {
                                         } label: {
                                             Text(equipment.title)
                                                 .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
-                                                .foregroundStyle(AppColors.TextBrown)
+                                                .fontWeight(.semibold)
+                                                .foregroundStyle(selectedEquipment == equipment ? Color(hex: "#2A2A2A") : AppColors.TextBrown)
                                                 .padding(.horizontal, 13)
                                                 .padding(.vertical, 8)
                                                 .background {
@@ -149,6 +150,7 @@ struct CreateRoutine: View {
 
                                                 Text(exercise.name)
                                                     .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
+                                                    .fontWeight(.semibold)
                                                     .foregroundStyle(AppColors.TextBrown)
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.82)

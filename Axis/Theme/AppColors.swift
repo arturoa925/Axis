@@ -19,9 +19,9 @@ struct AppColors {
     static var TextBlue: Color {
         isDarkMode ? Color(hex: "#93ACEE") : Color(hex: "#5B7AC5")
     }
-    // brown (dark: warm cream, since dark brown vanishes on a dark background)
+    // brown (dark: bright warm cream, since dark brown vanishes on a dark background)
     static var TextBrown: Color {
-        isDarkMode ? Color(hex: "#E9D3AC") : Color(hex: "#774B1C")
+        isDarkMode ? Color(hex: "#F7E9D0") : Color(hex: "#774B1C")
     }
     static let TextWhite = Color(hex: "#FFFFFF")
     static let TextBlack = Color(hex: "#000000")

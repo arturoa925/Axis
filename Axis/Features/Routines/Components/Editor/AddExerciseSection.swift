@@ -97,7 +97,8 @@ struct AddExerciseSection: View {
                         } label: {
                             Text(equipment.title)
                                 .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                                .foregroundStyle(AppColors.TextBrown)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(selectedEquipment == equipment ? Color(hex: "#2A2A2A") : AppColors.TextBrown)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 7)
                                 .background {
@@ -166,6 +167,7 @@ struct AddExerciseSection: View {
 
                 Text(option.name)
                     .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
+                    .fontWeight(.semibold)
                     .foregroundStyle(isAlreadyAdded ? AppColors.background : AppColors.TextBrown)
                     .lineLimit(1)
                     .minimumScaleFactor(0.82)

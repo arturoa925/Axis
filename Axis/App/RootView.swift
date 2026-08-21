@@ -37,6 +37,9 @@ struct RootView: View {
         // forces the subtree to rebuild when day/night flips, so every
         // static AppColors lookup re-evaluates against the new theme
         .id(themeManager.isDarkMode)
+        // system-adaptive elements (Materials, etc.) follow the device's actual
+        // appearance setting unless told otherwise — pin them to our custom theme
+        .preferredColorScheme(themeManager.isDarkMode ? .dark : .light)
         .animation(.easeInOut(duration: 0.6), value: onboardingStep)
         .onAppear {
             startOnboardingSequence()
