@@ -37,7 +37,7 @@ struct RoutineEditor: View {
                     VStack(alignment: .leading, spacing: 16) {
                         Text("Exercises")
                             .font(AppTypography.body)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.primary)
                             .padding(.horizontal, 18)
 
                         // exercise cards from original routine
@@ -127,8 +127,8 @@ struct RoutineEditor: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.system(.body, weight: .bold))
-                        .foregroundStyle(.white)
-                        .frame(width: 42, height: 42)
+                        .foregroundStyle(.primary)
+                        .frame(width: 44, height: 44)
                         .background(.ultraThinMaterial)
                         .clipShape(Circle())
                         .overlay {

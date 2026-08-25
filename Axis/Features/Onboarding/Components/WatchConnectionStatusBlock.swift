@@ -10,6 +10,7 @@ struct WatchConnectionStatusBlock: View {
     }
 
     @EnvironmentObject private var connectivityManager: PhoneConnectivityManager
+    var onContinue: (() -> Void)? = nil
 
     // must establish watch connection type first
     private var connectionState: ConnectionState {
@@ -44,6 +45,23 @@ struct WatchConnectionStatusBlock: View {
                         .padding(.top, 24)
                 }
                 .padding(.top, 8)
+
+                // with VoiceOver running, RootView skips the auto-advance timer and
+                // hands control to this button instead, so speech never gets cut off
+                if let onContinue {
+                    Button(action: onContinue) {
+                        Text("Continue")
+                            .font(AppTypography.body)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(AppColors.actionBlue)
+                            .clipShape(Capsule())
+                    }
+                    .buttonStyle(LivelyButtonStyle())
+                    .padding(.top, 30)
+                }
             }
             .padding(.horizontal, 28)
         }

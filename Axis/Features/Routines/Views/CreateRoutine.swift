@@ -45,7 +45,7 @@ struct CreateRoutine: View {
                     Section {
                         Text("Creating your new routine")
                             .font(AppTypography.title)
-                            .foregroundStyle(Color.white)
+                            .foregroundStyle(Color.primary)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .multilineTextAlignment(.center)
                             .listRowBackground(Color.clear)
@@ -62,11 +62,11 @@ struct CreateRoutine: View {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text("Find an exercise")
                                     .font(AppTypography.body)
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(.primary)
 
                                 Text("Search by movement, then filter by equipment.")
                                     .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                                    .foregroundStyle(.white.opacity(0.8))
+                                    .foregroundStyle(.primary.opacity(0.8))
                             }
 
                             HStack(spacing: 10) {
@@ -132,7 +132,7 @@ struct CreateRoutine: View {
                                     description: Text("Try a different search or equipment filter.")
                                 )
                                 .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
-                                .foregroundStyle(.white.opacity(0.72))
+                                .foregroundStyle(.primary.opacity(0.72))
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 10)
                             } else {
@@ -186,11 +186,11 @@ struct CreateRoutine: View {
                                 VStack(alignment: .leading, spacing: 6) {
                                     Text("Selected exercises")
                                         .font(AppTypography.body)
-                                        .foregroundStyle(.white)
+                                        .foregroundStyle(.primary)
 
                                     Text("Tap a card to adjust targets before saving.")
                                     .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                                    .foregroundStyle(.white.opacity(0.96))
+                                    .foregroundStyle(.primary.opacity(0.96))
                                 }
 
                                 ForEach($selectedExercises) { $exercise in
@@ -215,19 +215,19 @@ struct CreateRoutine: View {
                                                 VStack(alignment: .leading, spacing: 4) {
                                                     Text(exercise.option.name)
                                                         .font(.custom("NotoSans-Regular", size: 16, relativeTo: .body))
-                                                        .foregroundStyle(.white)
+                                                        .foregroundStyle(.primary)
                                                         .lineLimit(1)
 
                                                     Text("\(exercise.targetSets) sets • \(exercise.targetReps) reps")
                                                         .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                                                        .foregroundStyle(.white.opacity(0.8))
+                                                        .foregroundStyle(.primary.opacity(0.8))
                                                 }
 
                                                 Spacer()
 
                                                 Image(systemName: exercise.isExpanded ? "chevron.up.circle.fill" : "chevron.down.circle.fill")
                                                     .font(.system(.title2, weight: .semibold))
-                                                    .foregroundStyle(.white.opacity(0.38))
+                                                    .foregroundStyle(.primary.opacity(0.38))
                                                     .accessibilityHidden(true)
                                             }
                                             .contentShape(Rectangle())

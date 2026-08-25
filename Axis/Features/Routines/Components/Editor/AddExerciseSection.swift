@@ -47,6 +47,7 @@ struct AddExerciseSection: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .minimumTapTarget()
             .gesture(addPanelDragGesture)
             .accessibilityLabel(isAddPanelExpanded ? "Collapse exercise search" : "Expand exercise search")
 
@@ -68,13 +69,14 @@ struct AddExerciseSection: View {
                 } label: {
                     Image(systemName: isAddPanelExpanded ? "chevron.down" : "chevron.up")
                         .font(.system(.caption, weight: .bold))
-                        .foregroundStyle(.white.opacity(0.78))
+                        .foregroundStyle(.primary.opacity(0.78))
                         .frame(width: 28, height: 28)
                         .background(.white.opacity(0.10))
                         .clipShape(Circle())
                         .animation(nil, value: isAddPanelExpanded)
                 }
                 .buttonStyle(.plain)
+                .minimumTapTarget()
                 .accessibilityLabel(isAddPanelExpanded ? "Collapse exercise search" : "Expand exercise search")
             }
             .padding(.horizontal, 14)

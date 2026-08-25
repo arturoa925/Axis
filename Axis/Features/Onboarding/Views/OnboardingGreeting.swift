@@ -3,8 +3,10 @@
 import SwiftUI
 
 struct OnboardingGreeting: View {
+    var onContinue: (() -> Void)? = nil
+
     var body: some View {
-        QuoteBlock()
+        QuoteBlock(onContinue: onContinue)
     }
 }
 

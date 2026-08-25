@@ -12,7 +12,7 @@ struct TargetControl: View {
             // title refers to the trait being modified
             Text(title)
                 .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                .foregroundStyle(.white.opacity(0.9))
+                .foregroundStyle(.primary.opacity(0.9))
 
             HStack(spacing: 12) {
                 Button {
@@ -29,13 +29,14 @@ struct TargetControl: View {
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
-                .foregroundStyle(.white.opacity(value > range.lowerBound ? 0.86 : 0.28))
+                .foregroundStyle(.primary.opacity(value > range.lowerBound ? 0.86 : 0.28))
                 // lets user know minus is disabled
                 .disabled(value <= range.lowerBound)
+                .minimumTapTarget()
 
                 Text("\(value)")
                     .font(.custom("NotoSans-Regular", size: 22, relativeTo: .title3))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.primary)
                     .frame(minWidth: 28)
                     .contentTransition(.numericText())
 
@@ -54,6 +55,7 @@ struct TargetControl: View {
                 .buttonStyle(.plain)
                 .foregroundStyle(AppColors.TextBlue)
                 .disabled(value >= range.upperBound)
+                .minimumTapTarget()
             }
             .frame(maxWidth: .infinity)
         }
@@ -92,7 +94,7 @@ struct TargetControl: View {
         VStack(spacing: 16) {
             Text("Target Controls Preview")
                 .font(.custom("NotoSans-Regular", size: 24, relativeTo: .title2))
-                .foregroundStyle(.white)
+                .foregroundStyle(.primary)
                 .padding(.bottom, 8)
 
             HStack(spacing: 12) {
@@ -104,7 +106,7 @@ struct TargetControl: View {
 
             Text("\(sets) sets × \(reps) reps")
                 .font(.custom("NotoSans-Regular", size: 18, relativeTo: .body))
-                .foregroundStyle(.white)
+                .foregroundStyle(.primary)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 12)
                 .background(.ultraThinMaterial)

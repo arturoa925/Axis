@@ -13,7 +13,7 @@ struct HistoryView: View {
             VStack(spacing: 0) {
                 Text("History")
                     .font(.custom("IstokWeb-Regular", size: 40, relativeTo: .largeTitle))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.primary)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.horizontal, 20)
                     .padding(.top, 50)

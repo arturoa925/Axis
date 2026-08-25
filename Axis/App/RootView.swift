@@ -5,6 +5,7 @@ struct RootView: View {
     @EnvironmentObject var appState: AppState
     @ObservedObject private var themeManager = ThemeManager.shared
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
     @State private var onboardingStep: OnboardingStep = .launch
 
     // 4 step sequence
@@ -21,11 +22,13 @@ struct RootView: View {
                         .transition(.opacity)
 
                 case .greeting:
-                    OnboardingGreeting()
+                    // with VoiceOver running, a fixed timer would yank focus away mid-speech,
+                    // so the user advances manually instead
+                    OnboardingGreeting(onContinue: greetingContinueAction)
                         .transition(.opacity)
 
                 case .guide:
-                    OnboardingGuide()
+                    OnboardingGuide(onContinue: guideContinueAction)
                         .transition(.opacity)
 
                 case .main:
@@ -52,11 +55,16 @@ struct RootView: View {
     }
 
     private func startOnboardingSequence() {
+        // the splash is brief and non-interactive, so it always advances on its own
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.8) {
             withAnimation(.easeInOut(duration: 0.75)) {
                 onboardingStep = .greeting
             }
         }
+
+        // with VoiceOver on, greeting/guide wait for the user's own "Continue" tap
+        // (see advanceFromGreeting/advanceFromGuide) instead of firing on a fixed timer
+        guard !voiceOverEnabled else { return }
 
         // skip determining step
         DispatchQueue.main.asyncAfter(deadline: .now() + 6.2) {
@@ -70,6 +78,29 @@ struct RootView: View {
             withAnimation(.easeInOut(duration: 0.75)) {
                 onboardingStep = .main
             }
+        }
+    }
+
+    private var greetingContinueAction: (() -> Void)? {
+        guard voiceOverEnabled else { return nil }
+        return { advanceFromGreeting() }
+    }
+
+    private var guideContinueAction: (() -> Void)? {
+        guard voiceOverEnabled else { return nil }
+        return { advanceFromGuide() }
+    }
+
+    private func advanceFromGreeting() {
+        withAnimation(.easeInOut(duration: 0.75)) {
+            onboardingStep = appState.hasCompletedOnboarding ? .main : .guide
+        }
+    }
+
+    private func advanceFromGuide() {
+        appState.hasCompletedOnboarding = true
+        withAnimation(.easeInOut(duration: 0.75)) {
+            onboardingStep = .main
         }
     }
 }

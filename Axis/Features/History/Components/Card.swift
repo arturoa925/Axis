@@ -45,13 +45,13 @@ struct WorkoutHistoryCard: View {
             HStack(alignment: .top) {
                 Text(workout.templateName)
                     .font(.custom("IstokWeb-Regular", size: 20, relativeTo: .title3))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.primary)
 
                 Spacer()
 
                 Text(formattedDate)
                     .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                    .foregroundStyle(.white.opacity(0.6))
+                    .foregroundStyle(.primary.opacity(0.6))
             }
 
             HStack(spacing: 6) {
@@ -62,7 +62,7 @@ struct WorkoutHistoryCard: View {
 
                 Text(formattedDuration)
                     .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                    .foregroundStyle(.white.opacity(0.75))
+                    .foregroundStyle(.primary.opacity(0.75))
             }
 
             Divider()
@@ -80,7 +80,7 @@ struct WorkoutHistoryCard: View {
 
                         Text(exercise.name)
                             .font(.custom("NotoSans-Regular", size: 14, relativeTo: .body))
-                            .foregroundStyle(.white.opacity(0.85))
+                            .foregroundStyle(.primary.opacity(0.85))
                     }
                 }
             }

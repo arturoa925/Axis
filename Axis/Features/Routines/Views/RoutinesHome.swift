@@ -30,7 +30,7 @@ struct RoutinesHome: View {
                     VStack(spacing: 8) {
                         Text("Routines")
                             .font(.custom("IstokWeb-Regular", size: 40, relativeTo: .largeTitle))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.primary)
                             .padding(.top, 50)
 
                         ScrollView {
@@ -38,12 +38,12 @@ struct RoutinesHome: View {
                                 VStack(spacing: 10) {
                                     Image(systemName: "list.bullet.clipboard")
                                         .font(.system(.largeTitle))
-                                        .foregroundStyle(.white.opacity(0.8))
+                                        .foregroundStyle(.primary.opacity(0.8))
                                         .accessibilityHidden(true)
 
                                     Text("Create your first routine")
                                         .font(.custom("NotoSans-Regular", size: 17, relativeTo: .body))
-                                        .foregroundStyle(.white)
+                                        .foregroundStyle(.primary)
                                 }
                                 .frame(maxWidth: .infinity)
                                 .padding(.top, 120)
@@ -54,19 +54,19 @@ struct RoutinesHome: View {
                                             VStack(alignment: .leading, spacing: 4) {
                                                 Text(routine.name)
                                                     .font(.custom("IstokWeb-Regular", size: 20, relativeTo: .title3))
-                                                    .foregroundStyle(.white)
+                                                    .foregroundStyle(.primary)
                                                     .lineLimit(1)
 
                                                 Text("\(routine.exercises.count) exercises")
                                                     .font(.custom("NotoSans-Regular", size: 13, relativeTo: .body))
-                                                    .foregroundStyle(.white.opacity(0.65))
+                                                    .foregroundStyle(.primary.opacity(0.65))
                                             }
 
                                             Spacer(minLength: 8)
 
                                             Image(systemName: "chevron.right")
                                                 .font(.system(size: 13, weight: .semibold))
-                                                .foregroundStyle(.white.opacity(0.4))
+                                                .foregroundStyle(.primary.opacity(0.4))
                                         }
                                         .padding(16)
                                         .background(.ultraThinMaterial)
@@ -239,7 +239,7 @@ struct RoutinesHome: View {
         } label: {
             Image(systemName: systemImage)
                 .font(.system(.body, weight: .semibold))
-                .frame(width: 52, height: 42)
+                .frame(width: 52, height: 44)
             .foregroundStyle(selectedTab == tab ? AppColors.TextBlue : AppColors.TextBlue.opacity(0.62))
             .background {
                 if selectedTab == tab {

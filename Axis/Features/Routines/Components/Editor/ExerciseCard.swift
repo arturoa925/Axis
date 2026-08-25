@@ -16,12 +16,12 @@ struct ExerciseCard: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(exercise.exercise.name)
                         .font(.custom("NotoSans-Regular", size: 16, relativeTo: .body))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(.primary)
                         .lineLimit(1)
 
                     Text(equipmentTitle(exercise.exercise.equipment))
                         .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                        .foregroundStyle(.white.opacity(0.64))
+                        .foregroundStyle(.primary.opacity(0.64))
                 }
 
                 Spacer()
@@ -29,15 +29,17 @@ struct ExerciseCard: View {
                 VStack(alignment: .trailing, spacing: 8) {
                     Image(systemName: expandedExerciseID == exercise.id ? "chevron.up.circle.fill" : "chevron.down.circle.fill")
                         .font(.system(.title2, weight: .semibold))
-                        .foregroundStyle(.white.opacity(0.38))
-                        .accessibilityHidden(true)
+                        .foregroundStyle(.primary.opacity(0.38))
 
                     Text("\(exercise.targetSets) × \(exercise.targetReps)")
                         .font(.custom("NotoSans-Regular", size: 13, relativeTo: .caption))
-                        .foregroundStyle(.white.opacity(0.9))
-                        .accessibilityLabel("\(exercise.targetSets) sets, \(exercise.targetReps) reps")
+                        .foregroundStyle(.primary.opacity(0.9))
                 }
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("\(exercise.exercise.name), \(equipmentTitle(exercise.exercise.equipment)), \(exercise.targetSets) sets, \(exercise.targetReps) reps")
+            .accessibilityAddTraits(.isButton)
+            .accessibilityHint(expandedExerciseID == exercise.id ? "Tap to collapse targets" : "Tap to adjust targets")
 
             // controls to modify exercise goals
             if expandedExerciseID == exercise.id {
@@ -78,8 +80,6 @@ struct ExerciseCard: View {
         }
         .shadow(color: .black.opacity(0.10), radius: 14, x: 0, y: 6)
         .animation(.smooth(duration: 0.28), value: expandedExerciseID)
-        .accessibilityAddTraits(.isButton)
-        .accessibilityHint(expandedExerciseID == exercise.id ? "Tap to collapse targets" : "Tap to adjust targets")
     }
 }
 #Preview {
@@ -107,7 +107,7 @@ struct ExerciseCard: View {
             VStack(spacing: 6) {
                 Text(label)
                     .font(.custom("NotoSans-Regular", size: 12, relativeTo: .caption2))
-                    .foregroundStyle(.white.opacity(0.64))
+                    .foregroundStyle(.primary.opacity(0.64))
                 
                 Stepper(
                     value: binding,
@@ -116,7 +116,7 @@ struct ExerciseCard: View {
                 ) {
                     Text("\(binding.wrappedValue)")
                         .font(.custom("NotoSans-Regular", size: 18, relativeTo: .body))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(.primary)
                         .frame(minWidth: 40)
                 }
                 .labelsHidden()
