@@ -13,11 +13,7 @@ struct AddExerciseSection: View {
 
     // filter the static library — not SwiftData — so all equipment types are always visible
     private var filteredExercises: [ExerciseOption] {
-        ExerciseOptionLibrary.all
-            .filter { $0.equipment == selectedEquipment }
-            .filter { option in
-                exerciseSearchText.isEmpty || option.name.localizedCaseInsensitiveContains(exerciseSearchText)
-            }
+        RoutineEditingLogic.filterExercises(ExerciseOptionLibrary.all, equipment: selectedEquipment, searchText: exerciseSearchText)
     }
     let saveChanges: () -> Void
     let removeExercise: (TemplateExercise) -> Void

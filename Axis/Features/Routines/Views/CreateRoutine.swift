@@ -23,16 +23,12 @@ struct CreateRoutine: View {
 
     // filter by equipment selected
     private var filteredExercises: [ExerciseOption] {
-        exerciseOptions
-            .filter { $0.equipment == selectedEquipment }
-            .filter { option in
-                exerciseSearchText.isEmpty || option.name.localizedCaseInsensitiveContains(exerciseSearchText)
-            }
+        RoutineEditingLogic.filterExercises(exerciseOptions, equipment: selectedEquipment, searchText: exerciseSearchText)
     }
 
     // a name needs to be given and a exercise needs to be selected for routine to save
     private var canSaveRoutine: Bool {
-        !routineName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !selectedExercises.isEmpty
+        RoutineEditingLogic.canSaveRoutine(name: routineName, exerciseCount: selectedExercises.count)
     }
 
     var body: some View {
@@ -374,21 +370,9 @@ struct CreateRoutine: View {
 
     private func saveRoutine() {
         let cleanedName = routineName.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !cleanedName.isEmpty, !selectedExercises.isEmpty else { return }
+        guard RoutineEditingLogic.canSaveRoutine(name: routineName, exerciseCount: selectedExercises.count) else { return }
 
-        let templateExercises = selectedExercises.enumerated().map { index, selectedExercise in
-            let exercise = Exercise(
-                name: selectedExercise.option.name,
-                equipment: selectedExercise.option.equipment.rawValue
-            )
-
-            return TemplateExercise(
-                orderIndex: index,
-                exercise: exercise,
-                targetSets: selectedExercise.targetSets,
-                targetReps: selectedExercise.targetReps
-            )
-        }
+        let templateExercises = RoutineEditingLogic.buildTemplateExercises(from: selectedExercises)
 
         let routine = WorkoutTemplate(
             name: cleanedName,

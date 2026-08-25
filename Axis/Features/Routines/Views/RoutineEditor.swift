@@ -182,9 +182,7 @@ struct RoutineEditor: View {
     
     private func removeExercise(_ exercise: TemplateExercise) {
         routine.exercises.removeAll { $0.id == exercise.id }
-        for index in routine.exercises.indices {
-            routine.exercises[index].orderIndex = index
-        }
+        RoutineEditingLogic.reindexed(routine.exercises)
     }
 
     private func saveChanges() {
