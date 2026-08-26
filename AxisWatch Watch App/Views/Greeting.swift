@@ -3,19 +3,22 @@ import SwiftUI
 struct Greeting: View {
     var onComplete: (() -> Void)? = nil
 
+    @ObservedObject private var themeManager = WatchThemeManager.shared
     @State private var drift = false
     @State private var showTitle = false
     @State private var showLine1 = false
     @State private var showLine2 = false
 
+    private var backgroundGradientColors: [Color] {
+        themeManager.isDarkMode
+            ? [Color(hex: "#101114"), Color(hex: "#17181C"), Color(hex: "#1B1E2B")]
+            : [Color(hex: "#E7DED4"), Color(hex: "#D8CFC4"), Color(hex: "#F3ECE4")]
+    }
+
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [
-                    Color(hex: "#E7DED4"),
-                    Color(hex: "#D8CFC4"),
-                    Color(hex: "#F3ECE4")
-                ],
+                colors: backgroundGradientColors,
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )

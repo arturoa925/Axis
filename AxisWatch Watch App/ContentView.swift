@@ -2,6 +2,8 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(WatchConnectivityManager.self) private var connectivity
+    @ObservedObject private var themeManager = WatchThemeManager.shared
+    @Environment(\.scenePhase) private var scenePhase
     @AppStorage("hasGreeted") private var hasGreeted = false
     @State private var selectedTemplate: WatchTemplatePayload? = nil
     @State private var session: WatchWorkoutSession? = nil
@@ -62,6 +64,17 @@ struct ContentView: View {
                     }
                 }
                 .transition(Self.transition)
+            }
+        }
+        // forces the subtree to rebuild when day/night flips, so every
+        // static WatchColors lookup re-evaluates against the new theme
+        .id(themeManager.isDarkMode)
+        // system-adaptive elements (Materials, etc.) follow the watch's actual
+        // appearance setting unless told otherwise — pin them to our custom theme
+        .preferredColorScheme(themeManager.isDarkMode ? .dark : .light)
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                themeManager.refresh()
             }
         }
     }

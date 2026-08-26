@@ -83,7 +83,7 @@ struct WorkoutComplete: View {
                         .foregroundStyle(Color(hex: "#315BFF"))
                         .frame(width: 40, height: 40)
                         .glassEffect(in: Circle())
-                        .environment(\.colorScheme, .light)
+                        .environment(\.colorScheme, WatchThemeManager.shared.isDarkMode ? .dark : .light)
                 }
                 .buttonStyle(WatchLivelyButtonStyle())
                 .opacity(animateButton ? 1 : 0)

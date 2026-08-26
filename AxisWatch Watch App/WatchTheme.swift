@@ -21,12 +21,25 @@ extension Color {
 }
 
 enum WatchColors {
-    static let background     = Color(hex: "#D8CFC4")
-    static let cardBackground = Color(hex: "#D0DAFF")
-    static let textBrown      = Color(hex: "#774B1C")
-    static let textBlue       = Color(hex: "#5B7AC5")
-    static let textWhite      = Color.white
-    static let textBlack      = Color.black
+    private static var isDarkMode: Bool { WatchThemeManager.shared.isDarkMode }
+
+    static var background: Color {
+        isDarkMode ? Color(hex: "#17181C") : Color(hex: "#D8CFC4")
+    }
+    static var cardBackground: Color {
+        isDarkMode ? Color(hex: "#262B3D") : Color(hex: "#D0DAFF")
+    }
+    static var textBrown: Color {
+        isDarkMode ? Color(hex: "#F7E9D0") : Color(hex: "#774B1C")
+    }
+    static var textBlue: Color {
+        isDarkMode ? Color(hex: "#93ACEE") : Color(hex: "#5B7AC5")
+    }
+    // primary text against background/cards — near-black by day, near-white by night
+    static var textBlack: Color {
+        isDarkMode ? Color.white : Color.black
+    }
+    static let textWhite = Color.white
 }
 
 struct WatchLivelyButtonStyle: ButtonStyle {

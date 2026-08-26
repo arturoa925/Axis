@@ -101,6 +101,7 @@
 		85E8003882D150C2F361188A /* WorkoutSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2849DE02F7EB6BC9EF908B2 /* WorkoutSelector.swift */; };
 		1C0BA1B36FA58B89F89C8084 /* WatchPayloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564803BE16804D84EADBB67A /* WatchPayloads.swift */; };
 		451A0B1FF895A0ABAF293D04 /* WatchTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD8B971B84FA1EA4E8FFEA /* WatchTheme.swift */; };
+		BC2213655512CDC3F675B408 /* WatchThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20A97781874A89F9F8F892D /* WatchThemeManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -256,6 +257,7 @@
 		A2849DE02F7EB6BC9EF908B2 /* WorkoutSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSelector.swift; sourceTree = "<group>"; };
 		564803BE16804D84EADBB67A /* WatchPayloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPayloads.swift; sourceTree = "<group>"; };
 		2CCD8B971B84FA1EA4E8FFEA /* WatchTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTheme.swift; sourceTree = "<group>"; };
+		D20A97781874A89F9F8F892D /* WatchThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchThemeManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -393,6 +395,7 @@
 			children = (
 				8390B66AF2E4812BB2FE3DB3 /* WatchConnectivityManager.swift */,
 				B44622331E99164A2286A815 /* WatchWorkoutSession.swift */,
+				D20A97781874A89F9F8F892D /* WatchThemeManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -859,6 +862,7 @@
 				85E8003882D150C2F361188A /* WorkoutSelector.swift in Sources */,
 				1C0BA1B36FA58B89F89C8084 /* WatchPayloads.swift in Sources */,
 				451A0B1FF895A0ABAF293D04 /* WatchTheme.swift in Sources */,
+				BC2213655512CDC3F675B408 /* WatchThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

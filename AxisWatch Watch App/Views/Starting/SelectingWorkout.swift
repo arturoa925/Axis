@@ -74,7 +74,7 @@ struct SelectingWorkout: View {
                             .foregroundStyle(WatchColors.textBlack)
                             .frame(width: 36, height: 36)
                             .glassEffect(in: Circle())
-                            .environment(\.colorScheme, .light)
+                            .environment(\.colorScheme, WatchThemeManager.shared.isDarkMode ? .dark : .light)
                     }
                     .buttonStyle(WatchLivelyButtonStyle())
                     .opacity(animateCancel ? 1 : 0)

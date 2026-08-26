@@ -60,7 +60,7 @@ private struct RoutineCard: View {
             }
             .padding(12)
             .background(.ultraThinMaterial)
-            .environment(\.colorScheme, .light)
+            .environment(\.colorScheme, WatchThemeManager.shared.isDarkMode ? .dark : .light)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .overlay {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)

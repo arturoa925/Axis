@@ -90,7 +90,7 @@ struct StartedWorkout: View {
                                 .foregroundStyle(Color(hex: "#315BFF"))
                                 .frame(width: 40, height: 40)
                                 .glassEffect(in: Circle())
-                                .environment(\.colorScheme, .light)
+                                .environment(\.colorScheme, WatchThemeManager.shared.isDarkMode ? .dark : .light)
                         }
                         .buttonStyle(WatchLivelyButtonStyle())
                         .accessibilityLabel("Complete set")
@@ -105,7 +105,7 @@ struct StartedWorkout: View {
                                     .foregroundStyle(Color(hex: "#315BFF"))
                                     .frame(width: 36, height: 36)
                                     .glassEffect(in: Circle())
-                                    .environment(\.colorScheme, .light)
+                                    .environment(\.colorScheme, WatchThemeManager.shared.isDarkMode ? .dark : .light)
                             }
                             .buttonStyle(WatchLivelyButtonStyle())
                             .transition(.scale.combined(with: .opacity))
