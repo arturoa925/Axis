@@ -94,29 +94,40 @@ struct Greeting: View {
             GreetingSparkles(drift: drift)
 
             VStack(spacing: 10) {
-                Text("Axis")
-                    .font(.custom("IstokWeb-Regular", size: 22, relativeTo: .title))
-                    .foregroundStyle(WatchColors.textBrown)
-                    .tracking(1.2)
-                    .opacity(showTitle ? 1 : 0)
-                    .offset(y: showTitle ? 0 : 6)
-                    .shadow(color: Color(hex: "#F0F0F0").opacity(0.45), radius: 6, x: 0, y: 0)
-                    .animation(.easeOut(duration: 1.15), value: showTitle)
+                HStack(spacing: 1) {
+                    ForEach(Array("Axis".enumerated()), id: \.offset) { index, letter in
+                        Text(String(letter))
+                            .font(.custom("IstokWeb-Regular", size: 22, relativeTo: .title))
+                            .foregroundStyle(WatchColors.textBrown)
+                            .tracking(1.2)
+                            .opacity(showTitle ? 1 : 0)
+                            .scaleEffect(showTitle ? 1 : 0.4)
+                            .offset(y: showTitle ? 0 : 8)
+                            .shadow(color: Color(hex: "#F0F0F0").opacity(0.45), radius: 6, x: 0, y: 0)
+                            .animation(
+                                .spring(response: 0.5, dampingFraction: 0.62)
+                                    .delay(Double(index) * 0.09),
+                                value: showTitle
+                            )
+                    }
+                }
 
                 VStack(spacing: 3) {
                     Text("Small Actions.")
                         .font(.system(.caption))
                         .foregroundStyle(WatchColors.textBlue)
                         .opacity(showLine1 ? 1 : 0)
-                        .offset(y: showLine1 ? 0 : 5)
-                        .animation(.easeOut(duration: 0.8), value: showLine1)
+                        .scaleEffect(showLine1 ? 1 : 0.92)
+                        .offset(y: showLine1 ? 0 : 8)
+                        .animation(.spring(response: 0.5, dampingFraction: 0.8), value: showLine1)
 
                     Text("Repeated Daily.")
                         .font(.system(.caption))
                         .foregroundStyle(WatchColors.textBlue)
                         .opacity(showLine2 ? 1 : 0)
-                        .offset(y: showLine2 ? 0 : 5)
-                        .animation(.easeOut(duration: 0.8), value: showLine2)
+                        .scaleEffect(showLine2 ? 1 : 0.92)
+                        .offset(y: showLine2 ? 0 : 8)
+                        .animation(.spring(response: 0.5, dampingFraction: 0.8), value: showLine2)
                 }
             }
             .multilineTextAlignment(.center)

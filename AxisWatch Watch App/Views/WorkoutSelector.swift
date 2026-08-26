@@ -40,24 +40,32 @@ private struct RoutineCard: View {
 
     var body: some View {
         Button(action: onTap) {
-            VStack(alignment: .leading, spacing: 10) {
-                Text(template.name)
-                    .font(.custom("IstokWeb-Regular", size: 18, relativeTo: .headline))
-                    .foregroundStyle(.white)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
+            HStack(spacing: 8) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(template.name)
+                        .font(.custom("IstokWeb-Regular", size: 16, relativeTo: .headline))
+                        .foregroundStyle(WatchColors.textBlack)
+                        .lineLimit(1)
 
-                Text("\(template.exercises.count) exercises")
-                    .font(.system(.caption))
-                    .foregroundStyle(.white.opacity(0.85))
+                    Text("\(template.exercises.count) exercises")
+                        .font(.system(.caption2))
+                        .foregroundStyle(WatchColors.textBlack.opacity(0.65))
+                }
+
+                Spacer(minLength: 4)
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(WatchColors.textBlack.opacity(0.4))
             }
-            .frame(maxWidth: .infinity, alignment: .bottomLeading)
-            .padding(14)
-            .frame(height: 90)
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(WatchColors.cardBackground)
-            )
+            .padding(12)
+            .background(.ultraThinMaterial)
+            .environment(\.colorScheme, .light)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .stroke(.white.opacity(0.22), lineWidth: 1)
+            }
         }
         .buttonStyle(.plain)
         .accessibilityLabel("\(template.name), \(template.exercises.count) exercises")
