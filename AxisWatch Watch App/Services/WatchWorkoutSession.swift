@@ -21,6 +21,10 @@ final class WatchWorkoutSession {
     private(set) var templateName: String = ""
     private(set) var templateID: String? = nil
 
+    private(set) var isPaused: Bool = false
+    private var pausedAt: Date?
+    private var totalPausedDuration: TimeInterval = 0
+
     var currentExercise: WatchActiveExercise? {
         guard currentIndex < exercises.count else { return nil }
         return exercises[currentIndex]
@@ -36,9 +40,31 @@ final class WatchWorkoutSession {
         startedAt = Date()
         currentIndex = 0
         isComplete = false
+        isPaused = false
+        pausedAt = nil
+        totalPausedDuration = 0
         exercises = template.exercises
             .sorted { $0.orderIndex < $1.orderIndex }
             .map { WatchActiveExercise(name: $0.name, targetSets: $0.targetSets, targetReps: $0.targetReps) }
+    }
+
+    func pause() {
+        guard !isPaused else { return }
+        isPaused = true
+        pausedAt = Date()
+    }
+
+    func resume() {
+        guard isPaused, let pausedAt else { return }
+        totalPausedDuration += Date().timeIntervalSince(pausedAt)
+        self.pausedAt = nil
+        isPaused = false
+    }
+
+    // elapsed workout time with paused intervals excluded
+    func elapsed(at date: Date = Date()) -> TimeInterval {
+        let pausedSoFar = totalPausedDuration + (isPaused ? date.timeIntervalSince(pausedAt ?? date) : 0)
+        return max(0, date.timeIntervalSince(startedAt) - pausedSoFar)
     }
 
     func incrementRep() {
@@ -72,7 +98,7 @@ final class WatchWorkoutSession {
             templateName: templateName,
             templateID: templateID,
             startedAt: startedAt,
-            duration: Date().timeIntervalSince(startedAt),
+            duration: elapsed(),
             exercises: exercises.enumerated().map { idx, ex in
                 WatchCompletedExercisePayload(
                     name: ex.name,

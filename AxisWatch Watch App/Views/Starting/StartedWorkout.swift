@@ -5,8 +5,7 @@ struct StartedWorkout: View {
     let onComplete: (WatchCompletedWorkoutPayload) -> Void
     let onCancel: () -> Void
 
-    @Environment(\.scenePhase) private var scenePhase
-    @State private var showingEndAlert = false
+    @State private var showingPauseMenu = false
 
     var body: some View {
         TimelineView(.periodic(from: session.startedAt, by: 1)) { context in
@@ -18,7 +17,7 @@ struct StartedWorkout: View {
 
                     // ── TOP: elapsed time + exercise name ──────────────────
                     VStack(spacing: 3) {
-                        Text(elapsedText(context.date.timeIntervalSince(session.startedAt)))
+                        Text(elapsedText(session.elapsed(at: context.date)))
                             .font(.system(.title2, weight: .medium).monospacedDigit())
                             .foregroundStyle(WatchColors.textBlack.opacity(0.6))
                             .accessibilityHidden(true)
@@ -122,17 +121,37 @@ struct StartedWorkout: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                     .padding(.bottom, 20)
                 }
+
+                // ── corner: pause control ───────────────────────────────
+                VStack {
+                    HStack {
+                        Button {
+                            session.pause()
+                            showingPauseMenu = true
+                        } label: {
+                            Image(systemName: "pause.fill")
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundStyle(WatchColors.textBlack.opacity(0.7))
+                                .frame(width: 26, height: 26)
+                                .background(Circle().fill(.white.opacity(0.5)))
+                        }
+                        .buttonStyle(WatchLivelyButtonStyle())
+                        .accessibilityLabel("Pause workout")
+                        .accessibilityHint("Shows options to resume, end, or cancel")
+
+                        Spacer()
+                    }
+                    .padding(.leading, 14)
+                    .padding(.top, 8)
+
+                    Spacer()
+                }
             }
         }
-        .alert("Workout Paused", isPresented: $showingEndAlert) {
-            Button("Resume", role: .cancel) {}
+        .alert("Workout Paused", isPresented: $showingPauseMenu) {
+            Button("Resume", role: .cancel) { session.resume() }
             Button("End Workout") { onComplete(session.buildPayload()) }
             Button("Cancel Workout", role: .destructive) { onCancel() }
-        }
-        .onChange(of: scenePhase) { _, phase in
-            if phase == .inactive && !session.isComplete {
-                showingEndAlert = true
-            }
         }
         .onChange(of: session.isComplete) { _, complete in
             if complete { onComplete(session.buildPayload()) }
