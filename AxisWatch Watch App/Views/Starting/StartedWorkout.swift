@@ -14,6 +14,7 @@ struct StartedWorkout: View {
                 WatchColors.background.ignoresSafeArea()
 
                 VStack(spacing: 0) {
+                    Spacer(minLength: 10)
 
                     // ── TOP: elapsed time + exercise name ──────────────────
                     VStack(spacing: 3) {
@@ -42,9 +43,9 @@ struct StartedWorkout: View {
                         Button(action: { session.decrementRep() }) {
                             Image(systemName: "minus")
                                 .font(.system(.body, weight: .bold))
-                                .foregroundStyle(.white)
-                                .frame(width: 36, height: 36)
-                                .background(Circle().fill(Color(hex: "#315BFF")))
+                                .foregroundStyle(WatchColors.textBlack.opacity(0.75))
+                                .frame(width: 34, height: 34)
+                                .background(Circle().fill(.white))
                         }
                         .buttonStyle(WatchLivelyButtonStyle())
                         .accessibilityLabel("Decrease rep count")
@@ -55,7 +56,12 @@ struct StartedWorkout: View {
                             .font(.custom("NotoSans-Regular", size: 32, relativeTo: .largeTitle))
                             .foregroundStyle(WatchColors.textBlack)
                             .frame(width: 66, height: 66)
-                            .background(Circle().fill(WatchColors.cardBackground))
+                            .background(
+                                Circle()
+                                    .fill(WatchColors.cardBackground)
+                                    .overlay(Circle().stroke(.white.opacity(0.5), lineWidth: 1))
+                                    .shadow(color: .black.opacity(0.10), radius: 4, x: 0, y: 2)
+                            )
                             .contentTransition(.numericText())
                             .animation(.spring(response: 0.3, dampingFraction: 0.5), value: session.currentExercise?.currentReps)
                             .accessibilityLabel("\(session.currentExercise?.currentReps ?? 0) reps")
@@ -66,7 +72,7 @@ struct StartedWorkout: View {
                             Image(systemName: "plus")
                                 .font(.system(.body, weight: .bold))
                                 .foregroundStyle(.white)
-                                .frame(width: 36, height: 36)
+                                .frame(width: 34, height: 34)
                                 .background(Circle().fill(Color(hex: "#315BFF")))
                         }
                         .buttonStyle(WatchLivelyButtonStyle())
@@ -81,9 +87,10 @@ struct StartedWorkout: View {
                         Button(action: { session.completeSet() }) {
                             Image(systemName: "plus")
                                 .font(.system(.footnote, weight: .semibold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Color(hex: "#315BFF"))
                                 .frame(width: 40, height: 40)
                                 .glassEffect(in: Circle())
+                                .environment(\.colorScheme, .light)
                         }
                         .buttonStyle(WatchLivelyButtonStyle())
                         .accessibilityLabel("Complete set")
@@ -95,9 +102,10 @@ struct StartedWorkout: View {
                             Button(action: { session.completeSet() }) {
                                 Image(systemName: "checkmark")
                                     .font(.system(.body, weight: .semibold))
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(Color(hex: "#315BFF"))
                                     .frame(width: 36, height: 36)
                                     .glassEffect(in: Circle())
+                                    .environment(\.colorScheme, .light)
                             }
                             .buttonStyle(WatchLivelyButtonStyle())
                             .transition(.scale.combined(with: .opacity))
@@ -105,17 +113,14 @@ struct StartedWorkout: View {
                             .accessibilityLabel("Complete workout")
                             .accessibilityHint("Ends and saves your session")
                         } else if let exercise = session.currentExercise {
-                            Text(exercise.setProgressText)
-                                .font(.system(.body, weight: .medium))
-                                .foregroundStyle(WatchColors.textBlack.opacity(0.75))
-                                .contentTransition(.opacity)
+                            SetProgressDots(completed: exercise.completedSets, total: exercise.targetSets)
                                 .transition(.opacity)
-                                .animation(.easeOut(duration: 0.3), value: exercise.setProgressText)
+                                .animation(.easeOut(duration: 0.3), value: exercise.completedSets)
                         }
                     }
-                    .padding(.horizontal, 14)
+                    .padding(.horizontal, 22)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 20)
                 }
             }
         }
@@ -148,6 +153,24 @@ struct StartedWorkout: View {
             return String(format: "%d:%02d:%02d", h, m, s)
         }
         return String(format: "%02d:%02d", m, s)
+    }
+}
+
+private struct SetProgressDots: View {
+    let completed: Int
+    let total: Int
+
+    var body: some View {
+        HStack(spacing: 5) {
+            ForEach(0..<total, id: \.self) { index in
+                Circle()
+                    .fill(index < completed ? Color(hex: "#315BFF") : WatchColors.textBlack.opacity(0.15))
+                    .frame(width: 6, height: 6)
+                    .scaleEffect(index < completed ? 1 : 0.85)
+                    .animation(.spring(response: 0.4, dampingFraction: 0.6), value: completed)
+            }
+        }
+        .accessibilityHidden(true)
     }
 }
 
