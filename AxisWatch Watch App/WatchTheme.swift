@@ -32,6 +32,7 @@ enum WatchColors {
 struct WatchLivelyButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .brightness(configuration.isPressed ? 0.2 : 0)
             .scaleEffect(configuration.isPressed ? 0.9 : 1)
             .animation(.spring(response: 0.3, dampingFraction: 0.55), value: configuration.isPressed)
     }
