@@ -318,6 +318,124 @@ struct WatchWorkoutSessionCurrentExerciseTests {
     }
 }
 
+// MARK: - WatchWorkoutSession: pause / resume / elapsed
+
+@Suite("WatchWorkoutSession — pause and resume")
+struct WatchWorkoutSessionPauseTests {
+
+    @Test func isPaused_falseByDefault() {
+        let session = makeSession()
+
+        #expect(session.isPaused == false)
+    }
+
+    @Test func pause_setsIsPausedTrue() {
+        let session = makeSession()
+
+        session.pause()
+
+        #expect(session.isPaused == true)
+    }
+
+    @Test func pause_isIdempotentWhenAlreadyPaused() {
+        let session = makeSession()
+
+        session.pause()
+        session.pause()
+
+        #expect(session.isPaused == true)
+    }
+
+    @Test func resume_setsIsPausedFalse() {
+        let session = makeSession()
+        session.pause()
+
+        session.resume()
+
+        #expect(session.isPaused == false)
+    }
+
+    @Test func resume_whenNotPaused_isNoOp() {
+        let session = makeSession()
+        let start = session.startedAt
+
+        session.resume()
+
+        #expect(session.elapsed(at: start.addingTimeInterval(15)) == 15)
+    }
+
+    @Test func elapsed_matchesRawTimeWhenNeverPaused() {
+        let session = makeSession()
+        let start = session.startedAt
+
+        #expect(session.elapsed(at: start.addingTimeInterval(30)) == 30)
+    }
+
+    @Test func elapsed_neverGoesNegative() {
+        let session = makeSession()
+        let start = session.startedAt
+
+        #expect(session.elapsed(at: start.addingTimeInterval(-10)) == 0)
+    }
+
+    @Test func pause_freezesElapsedTimeRegardlessOfDateQueried() {
+        let session = makeSession()
+        let start = session.startedAt
+        session.pause()
+
+        let soonAfter = session.elapsed(at: start.addingTimeInterval(5))
+        let muchLater = session.elapsed(at: start.addingTimeInterval(500))
+
+        #expect(soonAfter == muchLater)
+    }
+
+    @Test func resume_afterPause_elapsedContinuesFromWhereItFroze() {
+        let session = makeSession()
+        let start = session.startedAt
+        session.pause()
+        let frozenElapsed = session.elapsed(at: start.addingTimeInterval(5))
+
+        session.resume()
+
+        // querying immediately after resume should still read ~the frozen value,
+        // since the accumulated paused duration offsets the raw clock gap
+        let justAfterResume = session.elapsed()
+        #expect(abs(justAfterResume - frozenElapsed) < 1)
+    }
+
+    @Test func start_resetsIsPaused() {
+        let session = makeSession()
+        session.pause()
+
+        session.start(template: makeTemplate())
+
+        #expect(session.isPaused == false)
+    }
+
+    @Test func start_resetsPausedDurationAccumulation() {
+        let session = makeSession()
+        session.pause()
+        session.resume()
+
+        session.start(template: makeTemplate())
+        let start = session.startedAt
+
+        #expect(session.elapsed(at: start.addingTimeInterval(5)) == 5)
+    }
+
+    @Test func buildPayload_durationExcludesPausedTime() {
+        let session = makeSession()
+        session.pause()
+        Thread.sleep(forTimeInterval: 0.05)
+        session.resume()
+
+        let rawElapsedSinceStart = Date().timeIntervalSince(session.startedAt)
+        let payload = session.buildPayload()
+
+        #expect(payload.duration < rawElapsedSinceStart)
+    }
+}
+
 // MARK: - WatchWorkoutSession: buildPayload()
 
 @Suite("WatchWorkoutSession — buildPayload")
