@@ -19,15 +19,19 @@ struct StartedWorkout: View {
                     VStack(spacing: 3) {
                         Text(elapsedText(context.date.timeIntervalSince(session.startedAt)))
                             .font(.system(.title2, weight: .medium).monospacedDigit())
-                            .foregroundStyle(WatchColors.textWhite)
+                            .foregroundStyle(WatchColors.textBlack.opacity(0.6))
                             .accessibilityHidden(true)
 
                         Text(session.currentExercise?.name ?? "")
                             .font(.custom("IstokWeb-Regular", size: 22, relativeTo: .headline))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(WatchColors.textBlack)
                             .lineLimit(1)
                             .minimumScaleFactor(0.7)
                             .padding(.horizontal, 10)
+                            .contentTransition(.opacity)
+                            .id(session.currentExercise?.name)
+                            .transition(.opacity.combined(with: .scale(scale: 0.95)))
+                            .animation(.spring(response: 0.4, dampingFraction: 0.75), value: session.currentExercise?.name)
                             .accessibilityAddTraits(.isHeader)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -42,16 +46,18 @@ struct StartedWorkout: View {
                                 .frame(width: 36, height: 36)
                                 .background(Circle().fill(Color(hex: "#315BFF")))
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(WatchLivelyButtonStyle())
                         .accessibilityLabel("Decrease rep count")
 
                         Spacer()
 
                         Text("\(session.currentExercise?.currentReps ?? 0)")
                             .font(.custom("NotoSans-Regular", size: 32, relativeTo: .largeTitle))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(WatchColors.textBlack)
                             .frame(width: 66, height: 66)
                             .background(Circle().fill(WatchColors.cardBackground))
+                            .contentTransition(.numericText())
+                            .animation(.spring(response: 0.3, dampingFraction: 0.5), value: session.currentExercise?.currentReps)
                             .accessibilityLabel("\(session.currentExercise?.currentReps ?? 0) reps")
 
                         Spacer()
@@ -63,7 +69,7 @@ struct StartedWorkout: View {
                                 .frame(width: 36, height: 36)
                                 .background(Circle().fill(Color(hex: "#315BFF")))
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(WatchLivelyButtonStyle())
                         .accessibilityLabel("Increase rep count")
                     }
                     .padding(.horizontal, 16)
@@ -79,7 +85,7 @@ struct StartedWorkout: View {
                                 .frame(width: 40, height: 40)
                                 .glassEffect(in: Circle())
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(WatchLivelyButtonStyle())
                         .accessibilityLabel("Complete set")
                         .accessibilityHint("Logs your reps and moves to the next set")
 
@@ -93,13 +99,18 @@ struct StartedWorkout: View {
                                     .frame(width: 36, height: 36)
                                     .glassEffect(in: Circle())
                             }
-                            .buttonStyle(.plain)
+                            .buttonStyle(WatchLivelyButtonStyle())
+                            .transition(.scale.combined(with: .opacity))
+                            .animation(.spring(response: 0.45, dampingFraction: 0.65), value: isOnFinalSet)
                             .accessibilityLabel("Complete workout")
                             .accessibilityHint("Ends and saves your session")
                         } else if let exercise = session.currentExercise {
                             Text(exercise.setProgressText)
                                 .font(.system(.body, weight: .medium))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(WatchColors.textBlack.opacity(0.75))
+                                .contentTransition(.opacity)
+                                .transition(.opacity)
+                                .animation(.easeOut(duration: 0.3), value: exercise.setProgressText)
                         }
                     }
                     .padding(.horizontal, 14)

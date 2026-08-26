@@ -4,19 +4,32 @@ struct WorkoutComplete: View {
     let payload: WatchCompletedWorkoutPayload
     let onDismiss: () -> Void
 
+    @State private var animateCheck = false
+    @State private var animateTitle = false
+    @State private var animateDuration = false
+    @State private var animateButton = false
+
     var body: some View {
         ZStack {
             WatchColors.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
 
-                // ── TOP: title + subtitle ──────────────────────────────
-                VStack(spacing: 5) {
+                // ── TOP: checkmark + title + subtitle ──────────────────
+                VStack(spacing: 6) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 26, weight: .semibold))
+                        .foregroundStyle(Color(hex: "#315BFF"))
+                        .opacity(animateCheck ? 1 : 0)
+                        .scaleEffect(animateCheck ? 1 : 0.3)
+                        .animation(.spring(response: 0.55, dampingFraction: 0.55), value: animateCheck)
+                        .padding(.bottom, 2)
+
                     Text("Session Complete")
                         .font(.custom("IstokWeb-Regular", size: 20, relativeTo: .headline))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(WatchColors.textBlack)
                         .multilineTextAlignment(.center)
-                        .padding(.bottom, 10)
+                        .padding(.bottom, 6)
 
                     Text("Check your progress back on the app")
                         .font(.custom("NotoSans-Regular", size: 14, relativeTo: .caption))
@@ -26,6 +39,9 @@ struct WorkoutComplete: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.horizontal, 10)
                 }
+                .opacity(animateTitle ? 1 : 0)
+                .offset(y: animateTitle ? 0 : 8)
+                .animation(.spring(response: 0.5, dampingFraction: 0.78), value: animateTitle)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding(.top, 10)
                 .padding(.bottom, 10)
@@ -36,7 +52,10 @@ struct WorkoutComplete: View {
                 // ── MIDDLE: elapsed time ───────────────────────────────
                 Text(formattedDuration)
                     .font(.system(.largeTitle, weight: .medium).monospacedDigit())
-                    .foregroundStyle(.white)
+                    .foregroundStyle(WatchColors.textBlack)
+                    .opacity(animateDuration ? 1 : 0)
+                    .scaleEffect(animateDuration ? 1 : 0.85)
+                    .animation(.spring(response: 0.5, dampingFraction: 0.7), value: animateDuration)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .padding(.bottom, 6)
                     .accessibilityHidden(true)
@@ -49,12 +68,21 @@ struct WorkoutComplete: View {
                         .frame(width: 40, height: 40)
                         .glassEffect(in: Circle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(WatchLivelyButtonStyle())
+                .opacity(animateButton ? 1 : 0)
+                .scaleEffect(animateButton ? 1 : 0.6)
+                .animation(.spring(response: 0.5, dampingFraction: 0.6), value: animateButton)
                 .accessibilityLabel("Done")
                 .accessibilityHint("Returns to your routine list")
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 .padding(.bottom, 10)
             }
+        }
+        .onAppear {
+            animateCheck = true
+            animateTitle = true
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.25)) { animateDuration = true }
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.6).delay(0.45)) { animateButton = true }
         }
     }
 
