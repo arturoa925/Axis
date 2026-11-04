@@ -23,6 +23,7 @@ struct ContentView: View {
                     }
                 }
                 .transition(Self.transition)
+                // completed workout
             } else if let completedPayload {
                 WorkoutComplete(payload: completedPayload) {
                     connectivity.sendCompletedWorkout(completedPayload)

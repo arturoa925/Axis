@@ -1,9 +1,4 @@
-//
-//  CreateRoutineSheet.swift
-//  Axis
-//
-//  Created by Arturo Ayala on 4/21/26.
-//
+
 
 import SwiftUI
 import SwiftData
@@ -352,13 +347,6 @@ struct CreateRoutine: View {
             } else {
                 selectedExercises.append(SelectedExerciseDraft(option: exercise))
             }
-        }
-    }
-
-    private func addExercise(_ exercise: ExerciseOption) {
-        guard !selectedExercises.contains(where: { $0.option.name == exercise.name }) else { return }
-        withAnimation(.smooth(duration: 0.28)) {
-            selectedExercises.append(SelectedExerciseDraft(option: exercise))
         }
     }
 

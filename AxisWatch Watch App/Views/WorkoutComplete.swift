@@ -107,10 +107,6 @@ struct WorkoutComplete: View {
         1 - pow(1 - t, 2)
     }
 
-    private var formattedDuration: String {
-        formattedDuration(payload.duration)
-    }
-
     private func formattedDuration(_ duration: TimeInterval) -> String {
         let total = Int(max(0, duration))
         let h = total / 3600

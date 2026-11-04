@@ -9,11 +9,6 @@ struct AppColors {
     static var background: Color {
         isDarkMode ? Color(hex: "#17181C") : Color(hex: "#D8CFC4")
     }
-    // light blue (dark: desaturated navy)
-    static var cardBackground: Color {
-        isDarkMode ? Color(hex: "#262B3D") : Color(hex: "#D0DAFF")
-    }
-
     // Text
     // navy (dark: lightened for contrast against a dark background)
     static var TextBlue: Color {
@@ -24,16 +19,10 @@ struct AppColors {
         isDarkMode ? Color(hex: "#F7E9D0") : Color(hex: "#774B1C")
     }
     static let TextWhite = Color(hex: "#FFFFFF")
-    static let TextBlack = Color(hex: "#000000")
 
     // Actions
     // vivid, saturated blue for primary CTAs — meant to pop, not blend in. Stays the same in both modes.
     static let actionBlue = Color(hex: "#3D6BFF")
-
-    //Status
-    static let success = Color.blue
-    static let warning = Color.orange
-    static let error = Color.red
 }
 
 //  Hex Support

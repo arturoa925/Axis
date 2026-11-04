@@ -85,6 +85,7 @@ struct AddExerciseSection: View {
             }
 
             // applicable when capsule is not expanded
+            // equipment buttons
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(EquipmentType.allCases) { equipment in

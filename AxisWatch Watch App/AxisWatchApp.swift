@@ -1,9 +1,4 @@
-//
-//  AxisWatchApp.swift
-//  AxisWatch Watch App
-//
-//  Created by Arturo Ayala on 5/15/26.
-//
+
 
 import SwiftUI
 

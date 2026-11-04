@@ -13,8 +13,6 @@ final class CompletedWorkout {
     var endedAt: Date
     var elapsedTime: TimeInterval
     var completedAt: Date
-    var totalCalories: Double
-    var averageHeartRate: Double
     var exercises: [CompletedExercise]
 
     init(
@@ -25,8 +23,6 @@ final class CompletedWorkout {
         endedAt: Date = Date(),
         elapsedTime: TimeInterval = 0,
         completedAt: Date = Date(),
-        totalCalories: Double = 0,
-        averageHeartRate: Double = 0,
         exercises: [CompletedExercise] = []
     ) {
         self.id = id
@@ -36,8 +32,6 @@ final class CompletedWorkout {
         self.endedAt = endedAt
         self.elapsedTime = elapsedTime
         self.completedAt = completedAt
-        self.totalCalories = totalCalories
-        self.averageHeartRate = averageHeartRate
         self.exercises = exercises
     }
 

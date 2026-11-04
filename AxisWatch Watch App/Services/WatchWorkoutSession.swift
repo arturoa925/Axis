@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 
+// tracked when within an exercise
 struct WatchActiveExercise {
     let name: String
     let targetSets: Int
@@ -12,6 +13,7 @@ struct WatchActiveExercise {
     var setProgressText: String { "Set \(min(completedSets + 1, targetSets)) of \(targetSets)" }
 }
 
+// entire workout payload for watch
 @Observable
 final class WatchWorkoutSession {
     var exercises: [WatchActiveExercise] = []

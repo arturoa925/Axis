@@ -112,10 +112,8 @@ struct RoutineEditor: View {
                 }
                 exerciseToDelete = nil
             }
-        } message: {
-            Text("This removes the exercise from this routine.")
         }
-       
+
     }
 
     

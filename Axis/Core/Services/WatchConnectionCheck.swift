@@ -57,6 +57,7 @@ final class PhoneConnectivityManager: NSObject, WCSessionDelegate, ObservableObj
         WCSession.default.activate()
     }
 
+    // only carries connection status
     func sessionReachabilityDidChange(_ session: WCSession) {
         DispatchQueue.main.async { self.isWatchReachable = session.isReachable }
     }

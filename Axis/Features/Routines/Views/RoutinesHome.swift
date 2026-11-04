@@ -1,9 +1,4 @@
-//
-//  RoutinesHome.swift
-//  Axis
-//
-//  Created by Arturo Ayala on 4/21/26.
-//
+
 
 import SwiftUI
 import SwiftData
@@ -194,8 +189,6 @@ struct RoutinesHome: View {
                     }
                     routineToDelete = nil
                 }
-            } message: {
-                Text("This removes the routine and its selected exercises from your list.")
             }
             .toolbar(.hidden, for: .navigationBar)
             // pushes routines to watch + drains any payload that arrived before view appeared
